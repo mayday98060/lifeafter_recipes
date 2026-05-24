@@ -12,7 +12,7 @@ const recipes = [
         img: "images/蜜糖.png",
         desc: "蜂蜜熬製的糖塊，食用之後回復大量生命。",
         formula: "4蜂蜜",
-        effect: "回復血量48，持續5秒"
+        effect: "回復血量48\n持續5秒"
     },
     {
         name: "純椰汁",
@@ -34,5 +34,243 @@ const recipes = [
         desc: "在這個時代，零食已經是很奢侈的食物了。",
         formula: "3水果+1蜂蜜",
         effect: "充飢"
-    }
+    },
+        {
+        name: "水果牛奶",
+        img: "images/水果牛奶.png",
+        desc: "水果味的牛奶，讓你開心得像孩子一樣。",
+        formula: "3水果+1牛奶",
+        effect: "充飢"
+    },
+        {
+        name: "牛奶糖",
+        img: "images/牛奶糖.png",
+        desc: "表白神器，拿去送給心愛的人吧。",
+        formula: "2蜂蜜+2牛奶",
+        effect: "移動速度提升5%"
+    },
+        {
+        name: "果汁",
+        img: "images/果汁.png",
+        desc: "純天然，無添加劑。",
+        formula: "2水果+2冰塊",
+        effect: "充飢"
+    },
+        {
+        name: "蜂糖水",
+        img: "images/蜂糖水.png",
+        desc: "佛系飲品，養生神器。",
+        formula: "1蜂蜜+3冰塊",
+        effect: "體溫+10\n去除感冒"
+    },
+        {
+        name: "蛋捲",
+        img: "images/蛋捲.png",
+        desc: "香脆的蛋捲，帶著小時候的味道。",
+        formula: "3麵粉+1禽蛋",
+        effect: "充飢"
+    },
+        {
+        name: "椰子凍",
+        img: "images/椰子凍.png",
+        desc: "椰子凍，炎熱夏季裡的解暑神器。",
+        formula: "3冰塊+1椰子",
+        effect: "體溫-20"
+    },
+        {
+        name: "椰汁水果撈",
+        img: "images/椰汁水果撈.png",
+        desc: "各種水果在椰汁的激發下，味道變得更有層次了。",
+        formula: "3水果+1椰子",
+        effect: "游泳速度提升9%"
+    },
+        {
+        name: "奶香玉米布丁",
+        img: "images/奶香玉米布丁.png",
+        desc: "一碗散發著濃濃玉米香味的牛奶布丁，甜到心間。",
+        formula: "2牛奶+2玉米",
+        effect: "移動速度提升5%"
+    },
+        {
+        name: "水果派",
+        img: "images/水果派.png",
+        desc: "香甜可口的水果派。",
+        formula: "2水果+1麵粉+1蜂蜜",
+        effect: "對人形怪傷害提升10%"
+    },
+        {
+        name: "葡式蛋塔",
+        img: "images/葡式蛋塔.png",
+        desc: "散發著濃濃的奶香，奶油焦到恰到好處。",
+        formula: "2麵粉+1蜂蜜+1牛奶",
+        effect: "挖礦主資源暴擊率10%\n挖礦副資源暴擊率10%"
+    },
+        {
+        name: "牛奶布丁",
+        img: "images/牛奶布丁.png",
+        desc: "夏日可口的甜品，解暑神器。",
+        formula: "2蜂蜜+1牛奶+1冰塊",
+        effect: "體溫-15"
+    },
+        {
+        name: "奶油濃湯",
+        img: "images/奶油濃湯.png",
+        desc: "一碗散發著奶香味的濃湯。",
+        formula: "2肉+1蔬菜+1牛奶",
+        effect: "體溫+20"
+    },
+        {
+        name: "椰奶雪花糕",
+        img: "images/椰奶雪花糕.png",
+        desc: "椰子和牛奶和所有味道濃縮在了這一小塊糕點上，濃郁的香味沁人心脾。",
+        formula: "2麵粉+1牛奶+1椰子",
+        effect: "勞動時採集熟練度提升10%"
+    },
+        {
+        name: "水果椰奶",
+        img: "images/水果椰奶.png",
+        desc: "清甜的水果搭配上香醇的椰奶，一口下去心情瞬間變得舒暢。",
+        formula: "2水果+1牛奶+1椰子",
+        effect: "游泳速度提升10%"
+    },
+        {
+        name: "蛋黃玉米酥",
+        img: "images/蛋黃玉米酥.png",
+        desc: "甜甜的玉米味、濃郁的蛋黃味，完美地融合在酥餅當中。",
+        formula: "2麵粉+1禽蛋+1玉米",
+        effect: "血量上限提升150"
+    },
+        {
+        name: "水果蛋糕",
+        img: "images/水果蛋糕.png",
+        desc: "甜美的水果蛋糕，食用之後讓你腳步輕盈。",
+        formula: "1水果+1麵粉+1蜂蜜+1牛奶",
+        effect: "移動速度提升5%"
+    },
+        {
+        name: "水果冰沙",
+        img: "images/水果冰沙.png",
+        desc: "清爽可口，適合在炎炎夏日食用。",
+        formula: "2水果+1蜂蜜+1冰塊",
+        effect: "體溫-20"
+    },
+        {
+        name: "草莓果凍",
+        img: "images/草莓果凍.png",
+        desc: "含有大顆草莓的果凍，食用後短時間內提高移動速度、暴擊率。",
+        formula: "1牛奶+1冰塊+2草莓\n(營地金庫前找夏冬涼購買食譜)",
+        effect: "暴擊率提升5%\n移動速度提升5%"
+    },
+        {
+        name: "草莓優酪乳冰",
+        img: "images/草莓優酪乳冰.png",
+        desc: "草莓和優酪乳的完美融合，激發舌尖的每個味蕾。",
+        formula: "1蜂蜜+1牛奶+1冰塊+1草莓",
+        effect: "移動速度提升5%"
+    },
+        {
+        name: "莓莓芝士蛋糕",
+        img: "images/莓莓芝士蛋糕.png",
+        desc: "一次草莓和藍莓的完美融合，激發你的全部味蕾。",
+        formula: "1草莓+1藍莓+1麵粉+1牛奶",
+        effect: "持續回復血量1.5"
+    },
+        {
+        name: "太陽果燉牛奶蛋",
+        img: "images/水果蜜餞.png",
+        desc: "在這個時代，零食已經是很奢侈的食物了。",
+        formula: "3水果+1蜂蜜",
+        effect: "充飢"
+    },
+        {
+        name: "水果蜜餞",
+        img: "images/水果蜜餞.png",
+        desc: "在這個時代，零食已經是很奢侈的食物了。",
+        formula: "3水果+1蜂蜜",
+        effect: "充飢"
+    },
+        {
+        name: "水果蜜餞",
+        img: "images/水果蜜餞.png",
+        desc: "在這個時代，零食已經是很奢侈的食物了。",
+        formula: "3水果+1蜂蜜",
+        effect: "充飢"
+    },
+        {
+        name: "水果蜜餞",
+        img: "images/水果蜜餞.png",
+        desc: "在這個時代，零食已經是很奢侈的食物了。",
+        formula: "3水果+1蜂蜜",
+        effect: "充飢"
+    },
+        {
+        name: "水果蜜餞",
+        img: "images/水果蜜餞.png",
+        desc: "在這個時代，零食已經是很奢侈的食物了。",
+        formula: "3水果+1蜂蜜",
+        effect: "充飢"
+    },
+        {
+        name: "水果蜜餞",
+        img: "images/水果蜜餞.png",
+        desc: "在這個時代，零食已經是很奢侈的食物了。",
+        formula: "3水果+1蜂蜜",
+        effect: "充飢"
+    },
+        {
+        name: "水果蜜餞",
+        img: "images/水果蜜餞.png",
+        desc: "在這個時代，零食已經是很奢侈的食物了。",
+        formula: "3水果+1蜂蜜",
+        effect: "充飢"
+    },
+        {
+        name: "水果蜜餞",
+        img: "images/水果蜜餞.png",
+        desc: "在這個時代，零食已經是很奢侈的食物了。",
+        formula: "3水果+1蜂蜜",
+        effect: "充飢"
+    },
+        {
+        name: "水果蜜餞",
+        img: "images/水果蜜餞.png",
+        desc: "在這個時代，零食已經是很奢侈的食物了。",
+        formula: "3水果+1蜂蜜",
+        effect: "充飢"
+    },
+        {
+        name: "水果蜜餞",
+        img: "images/水果蜜餞.png",
+        desc: "在這個時代，零食已經是很奢侈的食物了。",
+        formula: "3水果+1蜂蜜",
+        effect: "充飢"
+    },
+        {
+        name: "水果蜜餞",
+        img: "images/水果蜜餞.png",
+        desc: "在這個時代，零食已經是很奢侈的食物了。",
+        formula: "3水果+1蜂蜜",
+        effect: "充飢"
+    },
+        {
+        name: "水果蜜餞",
+        img: "images/水果蜜餞.png",
+        desc: "在這個時代，零食已經是很奢侈的食物了。",
+        formula: "3水果+1蜂蜜",
+        effect: "充飢"
+    },
+        {
+        name: "水果蜜餞",
+        img: "images/水果蜜餞.png",
+        desc: "在這個時代，零食已經是很奢侈的食物了。",
+        formula: "3水果+1蜂蜜",
+        effect: "充飢"
+    },
+        {
+        name: "水果蜜餞",
+        img: "images/水果蜜餞.png",
+        desc: "在這個時代，零食已經是很奢侈的食物了。",
+        formula: "3水果+1蜂蜜",
+        effect: "充飢"
+    },
 ];
