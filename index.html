@@ -39,10 +39,11 @@
 
         .recipe-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); 
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, 128px);
+            gap: 15px; 
             max-width: 1200px;
             margin: 0 auto;
+            justify-content: center; 
         }
 
         .recipe-card {
@@ -50,9 +51,10 @@
             border-radius: 8px;
             overflow: hidden;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s;
             border: 1px solid #444;
-            text-align: center;
+            display: flex;
+            flex-direction: column;
         }
 
         .recipe-card:hover {
@@ -60,23 +62,21 @@
             box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
         }
 
-        .recipe-img {
-            width: 100%;
-            height: 130px;
-            background-color: #3d3d3d;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            object-fit: auto;
-            object-fit: contain; 
-            padding: 10px;
-            box-sizing: border-box;
+       .recipe-img {
+            width: 128px;
+            height: 128px;
+            object-fit: cover;
+            margin: 0;
+            padding: 0;
+            border: none;
         }
 
         .recipe-name {
-            padding: 15px;
-            font-size: 1.1rem;
+            padding: 10px 5px;
+            font-size: 1rem;
             font-weight: bold;
+            text-align: center;
+            background-color: var(--card-bg); /* 文字背景與卡片一致 */
         }
 
         .modal {
