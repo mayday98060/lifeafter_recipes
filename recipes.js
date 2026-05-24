@@ -27,5 +27,5 @@ const recipes = [
         desc: "水果味的冰棒，童年的味道。",
         formula: "1水果+3冰塊",
         effect: "體溫-10"
-    },
+    }
 ];
