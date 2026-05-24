@@ -147,6 +147,30 @@
             background-color: var(--accent-color);
             color: #fff;
         }
+
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 30px auto;
+            text-align: center;
+        }
+        
+        #searchInput {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 2px solid var(--section-border);
+            border-radius: 25px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+        
+        #searchInput:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 8px rgba(243, 156, 18, 0.3);
+        }
     </style>
 </head>
 <body>
@@ -156,6 +180,10 @@
 </div>
 
     <h1>明日之後食譜大全</h1>
+
+    <div class="search-container">
+    <input type="text" id="searchInput" placeholder="輸入料理名稱、食材或效果（如：鱈魚、暴擊）..." oninput="filterRecipes()">
+</div>
 
     <div class="recipe-grid" id="recipeGrid"></div>
 
@@ -184,14 +212,21 @@
     <script src="recipes.js"></script>
 
     <script>
-        // 初始化網頁：確保數據載入後才動態生成卡片
-        const grid = document.getElementById('recipeGrid');
+        function displayRecipes(recipesToRender) {
+            const grid = document.getElementById('recipeGrid');
+            grid.innerHTML = "";
         
-        if (typeof recipes !== 'undefined' && recipes.length > 0) {
-            recipes.forEach((recipe, index) => {
+            if (recipesToRender.length === 0) {
+                grid.innerHTML = "<p style='text-align:center; color:#888; grid-column: 1/-1;'>找不到符合條件的食譜 😭</p>";
+                return;
+            }
+        
+            recipesToRender.forEach((recipe) => {
+                const originalIndex = recipes.findIndex(r => r.name === recipe.name);
+        
                 const card = document.createElement('div');
                 card.className = 'recipe-card';
-                card.onclick = () => openModal(index);
+                card.onclick = () => openModal(originalIndex);
                 
                 card.innerHTML = `
                     <img class="recipe-img" src="${recipe.img}" alt="${recipe.name}">
@@ -199,10 +234,32 @@
                 `;
                 grid.appendChild(card);
             });
-        } else {
-            grid.innerHTML = "<p style='text-align:center; color:#ff4d4d;'>找不到食譜數據，請檢查 recipes.js 檔案！</p>";
         }
-
+        
+        function filterRecipes() {
+            const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
+            
+            if (!keyword) {
+                displayRecipes(recipes);
+                return;
+            }
+        
+            const filtered = recipes.filter(recipe => {
+                return recipe.name.toLowerCase().includes(keyword) || 
+                       recipe.formula.toLowerCase().includes(keyword) || 
+                       recipe.desc.toLowerCase().includes(keyword) || 
+                       recipe.effect.toLowerCase().includes(keyword);
+            });
+        
+            displayRecipes(filtered);
+        }
+        
+        if (typeof recipes !== 'undefined' && recipes.length > 0) {
+            displayRecipes(recipes);
+        } else {
+            document.getElementById('recipeGrid').innerHTML = "<p style='text-align:center; color:#ff4d4d;'>找不到食譜數據，請檢查 recipes.js 檔案！</p>";
+        }
+        
         const modal = document.getElementById('recipeModal');
         
         function openModal(index) {
@@ -213,11 +270,11 @@
             document.getElementById('modalEffect').innerText = r.effect;
             modal.style.display = 'flex';
         }
-
+        
         function closeModal() {
             modal.style.display = 'none';
         }
-
+        
         window.onclick = function(event) {
             if (event.target == modal) {
                 closeModal();
