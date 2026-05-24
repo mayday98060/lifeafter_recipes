@@ -1,10 +1,10 @@
 // 明日之後 - 食譜數據庫
 const recipes = [
     {
-        name: "麻辣鱈魚",
-        img: "images/cod.png", 
+        name: "果醬",
+        img: "images/果醬.png", 
         desc: "熱氣騰騰、麻辣鮮香的鱈魚料理，末日裡暖身首選。",
-        formula: "辣椒 + 鱈魚",
+        formula: "4水果",
         effect: "大幅提升對感染體傷害、提升暴擊率。"
     },
     {
