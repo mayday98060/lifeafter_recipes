@@ -10,6 +10,17 @@
             --card-bg: #2d2d2d;
             --text-color: #ffffff;
             --accent-color: #f39c12;
+            --modal-border: #f39c12;
+            --section-border: #444;
+        }
+        
+        [data-theme="light"] {
+            --bg-color: #f5f6fa;
+            --card-bg: #ffffff;
+            --text-color: #2c3e50;
+            --accent-color: #d35400; 
+            --modal-border: #d35400;
+            --section-border: #e0e0e0;
         }
 
         body {
@@ -114,11 +125,37 @@
         .modal-section strong {
             color: #5dade2;
         }
+
+        .theme-switch-wrapper {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+        }
+        
+        .theme-btn {
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            border: 1px solid var(--accent-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-btn:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
     </style>
 </head>
 <body>
 
-    <h1>錦囊妙計：明日之後食譜大全</h1>
+    <div class="theme-switch-wrapper">
+    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀️ 淺色模式</button>
+</div>
+
+    <h1>明日之後食譜大全</h1>
 
     <div class="recipe-grid" id="recipeGrid"></div>
 
@@ -133,7 +170,7 @@
             </div>
             
             <div class="modal-section">
-                <strong>【必備配方】</strong>
+                <strong>【食譜配方】</strong>
                 <p id="modalFormula"></p>
             </div>
             
@@ -186,6 +223,19 @@
                 closeModal();
             }
         }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const themeBtn = document.getElementById('themeBtn');
+            
+            if (currentTheme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+                themeBtn.innerText = "☀️ 淺色模式";
+            } else {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeBtn.innerText = "🌙 深色模式";
+            }
+}
     </script>
 </body>
 </html>
