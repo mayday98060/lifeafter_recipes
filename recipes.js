@@ -27,5 +27,12 @@ const recipes = [
         desc: "水果味的冰棒，童年的味道。",
         formula: "1水果+3冰塊",
         effect: "體溫-10"
+    },
+    {
+        name: "水果蜜餞",
+        img: "images/水果蜜餞.png",
+        desc: "在這個時代，零食已經是很奢侈的食物了。",
+        formula: "3水果+1蜂蜜",
+        effect: "充飢"
     }
 ];
