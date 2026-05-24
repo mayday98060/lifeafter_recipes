@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>明日之後 - 食譜攻略大全</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-color: #ffffff;
+            --accent-color: #f39c12;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: var(--accent-color);
+            margin-bottom: 30px;
+        }
+
+        /* 食譜網格佈局 */
+        .recipe-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* 食譜卡片樣式 */
+        .recipe-card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #444;
+            text-align: center;
+        }
+
+        .recipe-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
+        }
+
+        .recipe-img {
+            width: 100%;
+            height: 150px;
+            background-color: #3d3d3d; /* 圖片載入前的占位色 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #888;
+            object-fit: cover;
+        }
+
+        .recipe-name {
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        /* 彈窗 (Modal) 樣式 */
+        .modal {
+            display: none; 
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            border: 2px solid var(--accent-color);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .close-btn:hover { color: #fff; }
+
+        .modal-title {
+            color: var(--accent-color);
+            margin-top: 0;
+            font-size: 1.8rem;
+        }
+
+        .modal-section {
+            margin: 15px 0;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .modal-section strong {
+            color: #5dade2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>錦囊妙計：明日之後食譜大全</h1>
+
+    <!-- 食譜列表區塊 -->
+    <div class="recipe-grid" id="recipeGrid"></div>
+
+    <!-- 點擊彈窗區塊 -->
+    <div class="modal" id="recipeModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 class="modal-title" id="modalName">食譜名稱</h2>
+            
+            <div class="modal-section">
+                <strong>【料理介紹】</strong>
+                <p id="modalDesc">這裡會顯示料理的背景或好玩描述。</p>
+            </div>
+            
+            <div class="modal-section">
+                <strong>【必備配方】</strong>
+                <p id="modalFormula">食材 1 + 食材 2</p>
+            </div>
+            
+            <div class="modal-section">
+                <strong>【美味效果】</strong>
+                <p id="modalEffect">提升採集速度、暴擊率等。</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 這裡放入你的食譜數據 (你可以自行在陣列中增加更多食譜)
+        const recipes = [
+            {
+                name: "麻辣鱈魚",
+                img: "https://via.placeholder.com/200x150?text=Cod", // 之後替換成你的遊戲截圖網址
+                desc: "熱氣騰騰、麻辣鮮香的鱈魚料理，末日裡暖身首選。",
+                formula: "辣椒 + 鱈魚",
+                effect: "大幅提升對感染體傷害、提升暴擊率。"
+            },
+            {
+                name: "水果蜜餞",
+                img: "https://via.placeholder.com/200x150?text=Fruit",
+                desc: "甜滋滋的醃製水果，能讓人心情變好。",
+                formula: "水果 + 蜂蜜",
+                effect: "恢復飽食度、持續回復血量。"
+            },
+            {
+                name: "三明治",
+                img: "https://via.placeholder.com/200x150?text=Sandwich",
+                desc: "營養均衡的簡單早餐，攜帶方便。",
+                formula: "肉 + 水果 + 小麥",
+                effect: "大幅提升對人形怪物的傷害。"
+            }
+        ];
+
+        // 動態生成食譜卡片
+        const grid = document.getElementById('recipeGrid');
+        recipes.forEach((recipe, index) => {
+            const card = document.createElement('div');
+            card.className = 'recipe-card';
+            card.onclick = () => openModal(index);
+            
+            card.innerHTML = `
+                <img class="recipe-img" src="${recipe.img}" alt="${recipe.name}">
+                <div class="recipe-name">${recipe.name}</div>
+            `;
+            grid.appendChild(card);
+        });
+
+        // 彈窗控制邏輯
+        const modal = document.getElementById('recipeModal');
+        
+        function openModal(index) {
+            const r = recipes[index];
+            document.getElementById('modalName').innerText = r.name;
+            document.getElementById('modalDesc').innerText = r.desc;
+            document.getElementById('modalFormula').innerText = r.formula;
+            document.getElementById('modalEffect').innerText = r.effect;
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        // 點擊彈窗外部也可以關閉
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
