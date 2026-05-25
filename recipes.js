@@ -1,4 +1,3 @@
-// 明日之後 - 食譜數據庫
 const recipes = [
     {
         name: "果醬",
@@ -177,7 +176,7 @@ const recipes = [
     },
         {
         name: "太陽果燉牛奶蛋",
-        img: "images/水果蜜餞.png",
+        img: "images/太陽果燉牛奶蛋.png",
         desc: "在這個時代，零食已經是很奢侈的食物了。",
         formula: "3水果+1蜂蜜",
         effect: "充飢"
