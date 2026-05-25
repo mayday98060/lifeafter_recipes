@@ -155,7 +155,7 @@ const recipes = [
     },
         {
         name: "草莓果凍",
-        img: "images/草莓果凍.png",
+        img: "images/草莓果凍 .png",
         desc: "含有大顆草莓的果凍，食用後短時間內提高移動速度、暴擊率。",
         formula: "1牛奶+1冰塊+2草莓\n(營地金庫前找夏冬涼購買食譜)",
         effect: "暴擊率提升5%\n移動速度提升5%"
