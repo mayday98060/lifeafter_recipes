@@ -13,15 +13,6 @@
             --modal-border: #f39c12;
             --section-border: #444;
         }
-        
-        [data-theme="light"] {
-            --bg-color: #f5f6fa;
-            --card-bg: #ffffff;
-            --text-color: #2c3e50;
-            --accent-color: #d35400; 
-            --modal-border: #d35400;
-            --section-border: #e0e0e0;
-        }
 
         body {
             font-family: 'Microsoft JhengHei', sans-serif;
@@ -62,7 +53,7 @@
             box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
         }
 
-       .recipe-img {
+        .recipe-img {
             width: 128px;
             height: 128px;
             object-fit: cover;
@@ -76,7 +67,7 @@
             font-size: 1rem;
             font-weight: bold;
             text-align: center;
-            background-color: var(--card-bg); /* 文字背景與卡片一致 */
+            background-color: var(--card-bg);
         }
 
         .modal {
@@ -126,28 +117,6 @@
             color: #5dade2;
         }
 
-        .theme-switch-wrapper {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-        }
-        
-        .theme-btn {
-            background-color: var(--card-bg);
-            color: var(--text-color);
-            border: 1px solid var(--accent-color);
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-        }
-        
-        .theme-btn:hover {
-            background-color: var(--accent-color);
-            color: #fff;
-        }
-
         .search-container {
             max-width: 500px;
             margin: 0 auto 30px auto;
@@ -172,7 +141,7 @@
             box-shadow: 0 0 8px rgba(243, 156, 18, 0.3);
         }
 
-        .site-footer {
+        .footer-content {
             margin-top: 50px; 
             padding: 20px 10px;
             background-color: var(--card-bg); 
@@ -181,24 +150,19 @@
             text-align: center;
             font-size: 0.9rem;
             line-height: 1.6;
+            border-radius: 8px;
         }
         
-        .site-footer a {
+        .footer-content a {
             color: var(--accent-color);
             text-decoration: none;
             font-weight: bold;
             transition: opacity 0.2s;
         }
         
-        .site-footer a:hover {
+        .footer-content a:hover {
             text-decoration: underline;
             opacity: 0.8;
-        }
-        
-        .site-footer .copyright {
-            margin-top: 10px;
-            font-size: 0.8rem;
-            color: #888;
         }
 
         /* 💡 頂部導覽按鈕區域 */
@@ -230,11 +194,11 @@
         .sidebar {
             position: fixed;
             top: 0; 
-            left: -250px; /* 預設藏在螢幕左邊外面 */
+            left: -250px; 
             width: 250px; 
             height: 100%;
             background-color: var(--card-bg);
-            z-index: 2000; /* 確保在最上層，不會被食譜卡片遮住 */
+            z-index: 2000; 
             transition: 0.3s ease;
             box-shadow: 5px 0 15px rgba(0,0,0,0.5);
             padding-top: 60px;
@@ -273,151 +237,133 @@
     <span class="close-sidebar" onclick="toggleSidebar(false)">&times;</span>
     <a href="index.html">🏠 返回主頁</a>
     <a href="recipes-page.html" style="background-color: var(--accent-color); color: #1a1a1a;">🍳 食譜攻略圖鑑</a>
-    <a href="#" onclick="alert('武器圖鑑正在籌備中！')">⚔️ 裝備圖鑑</a>
+    <a href="#" onclick="alert('裝備圖鑑正在籌備中！')">⚔️ 裝備圖鑑</a>
     <a href="#" onclick="alert('資源圖鑑正在籌備中！')">🗺️ 資源圖鑑</a>
     <a href="#" onclick="alert('生物圖鑑正在籌備中！')">🧟 生物圖鑑</a>
-    <a href="stats.html" >📊 使用者統計</a>
+    <a href="stats.html">📊 使用者統計</a>
 </div>
 
 <div class="top-nav-bar">
     <div class="menu-btn" onclick="toggleSidebar(true)">☰ 選單</div>
 </div>
 
-    <div class="theme-switch-wrapper">
-    <button class="theme-btn" id="themeBtn" onclick="toggleTheme()">☀️ 淺色模式</button>
+<h1>明日之後食譜大全</h1>
+
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="輸入料理名稱、食材或效果（如：草莓、暴擊）..." oninput="filterRecipes()">
 </div>
 
-    <h1>明日之後食譜大全</h1>
+<div class="recipe-grid" id="recipeGrid"></div>
 
-    <div class="search-container">
-    <input type="text" id="searchInput" placeholder="輸入料理名稱、食材或效果（如：鱈魚、暴擊）..." oninput="filterRecipes()">
-</div>
-
-    <div class="footer-content">
-        <p>🕒 最後更新時間：2026 年 5 月 26 日</p>
-        <p>📬 聯絡資訊 / 報錯回報：
-            <a href="https://discord.gg/eF3XWnXP" target="_blank">Discord 交流群</a>
-        </p>
-    </div>
-
-    <div class="recipe-grid" id="recipeGrid"></div>
-
-    <div class="modal" id="recipeModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2 class="modal-title" id="modalName">食譜名稱</h2>
-            
-            <div class="modal-section">
-                <strong>【料理介紹】</strong>
-                <p id="modalDesc"></p>
-            </div>
-            
-            <div class="modal-section">
-                <strong>【食譜配方】</strong>
-                <p id="modalFormula"></p>
-            </div>
-            
-            <div class="modal-section">
-                <strong>【美味效果】</strong>
-                <p id="modalEffect"></p>
-            </div>
+<div class="modal" id="recipeModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2 class="modal-title" id="modalName">食譜名稱</h2>
+        
+        <div class="modal-section">
+            <strong>【料理介紹】</strong>
+            <p id="modalDesc"></p>
+        </div>
+        
+        <div class="modal-section">
+            <strong>【食譜配方】</strong>
+            <p id="modalFormula"></p>
+        </div>
+        
+        <div class="modal-section">
+            <strong>【美味效果】</strong>
+            <p id="modalEffect"></p>
         </div>
     </div>
+</div>
 
-    <script src="recipes.js"></script>
+<div class="footer-content">
+    <p>🕒 最後更新時間：2026 年 5 月 26 日</p>
+    <p>📬 聯絡資訊 / 報錯回報：
+        <a href="https://discord.gg/eF3XWnXP" target="_blank">Discord 交流群</a>
+    </p>
+</div>
 
-    <script>
-        function displayRecipes(recipesToRender) {
-            const grid = document.getElementById('recipeGrid');
-            grid.innerHTML = "";
-        
-            if (recipesToRender.length === 0) {
-                grid.innerHTML = "<p style='text-align:center; color:#888; grid-column: 1/-1;'>找不到符合條件的食譜 😭</p>";
-                return;
-            }
-        
-            recipesToRender.forEach((recipe) => {
-                const originalIndex = recipes.findIndex(r => r.name === recipe.name);
-        
-                const card = document.createElement('div');
-                card.className = 'recipe-card';
-                card.onclick = () => openModal(originalIndex);
-                
-                card.innerHTML = `
-                    <img class="recipe-img" src="${recipe.img}" alt="${recipe.name}">
-                    <div class="recipe-name">${recipe.name}</div>
-                `;
-                grid.appendChild(card);
-            });
+<script src="recipes.js"></script>
+
+<script>
+    function displayRecipes(recipesToRender) {
+        const grid = document.getElementById('recipeGrid');
+        grid.innerHTML = "";
+    
+        if (recipesToRender.length === 0) {
+            grid.innerHTML = "<p style='text-align:center; color:#888; grid-column: 1/-1;'>找不到符合條件的食譜 😭</p>";
+            return;
         }
-        
-        function filterRecipes() {
-            const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
+    
+        recipesToRender.forEach((recipe) => {
+            const originalIndex = recipes.findIndex(r => r.name === recipe.name);
+    
+            const card = document.createElement('div');
+            card.className = 'recipe-card';
+            card.onclick = () => openModal(originalIndex);
             
-            if (!keyword) {
-                displayRecipes(recipes);
-                return;
-            }
+            card.innerHTML = `
+                <img class="recipe-img" src="${recipe.img}" alt="${recipe.name}">
+                <div class="recipe-name">${recipe.name}</div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+    
+    function filterRecipes() {
+        const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
         
-            const filtered = recipes.filter(recipe => {
-                return recipe.name.toLowerCase().includes(keyword) || 
-                       recipe.formula.toLowerCase().includes(keyword) || 
-                       recipe.desc.toLowerCase().includes(keyword) || 
-                       recipe.effect.toLowerCase().includes(keyword);
-            });
-        
-            displayRecipes(filtered);
-        }
-        
-        if (typeof recipes !== 'undefined' && recipes.length > 0) {
+        if (!keyword) {
             displayRecipes(recipes);
+            return;
+        }
+    
+        const filtered = recipes.filter(recipe => {
+            return recipe.name.toLowerCase().includes(keyword) || 
+                   recipe.formula.toLowerCase().includes(keyword) || 
+                   recipe.desc.toLowerCase().includes(keyword) || 
+                   recipe.effect.toLowerCase().includes(keyword);
+        });
+    
+        displayRecipes(filtered);
+    }
+    
+    if (typeof recipes !== 'undefined' && recipes.length > 0) {
+        displayRecipes(recipes);
+    } else {
+        document.getElementById('recipeGrid').innerHTML = "<p style='text-align:center; color:#ff4d4d;'>找不到食譜數據，請檢查 recipes.js 檔案！</p>";
+    }
+    
+    const modal = document.getElementById('recipeModal');
+    
+    function openModal(index) {
+        const r = recipes[index];
+        document.getElementById('modalName').innerText = r.name;
+        document.getElementById('modalDesc').innerText = r.desc;
+        document.getElementById('modalFormula').innerText = r.formula;
+        document.getElementById('modalEffect').innerText = r.effect;
+        modal.style.display = 'flex';
+    }
+    
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+    
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+
+    function toggleSidebar(open) {
+        const sidebar = document.getElementById('mySidebar');
+        if (open) {
+            sidebar.style.left = '0px'; 
         } else {
-            document.getElementById('recipeGrid').innerHTML = "<p style='text-align:center; color:#ff4d4d;'>找不到食譜數據，請檢查 recipes.js 檔案！</p>";
+            sidebar.style.left = '-250px'; 
         }
-        
-        const modal = document.getElementById('recipeModal');
-        
-        function openModal(index) {
-            const r = recipes[index];
-            document.getElementById('modalName').innerText = r.name;
-            document.getElementById('modalDesc').innerText = r.desc;
-            document.getElementById('modalFormula').innerText = r.formula;
-            document.getElementById('modalEffect').innerText = r.effect;
-            modal.style.display = 'flex';
-        }
-        
-        function closeModal() {
-            modal.style.display = 'none';
-        }
-        
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                closeModal();
-            }
-        }
-
-        // 💡 控制左上角側邊欄開關
-        function toggleSidebar(open) {
-            const sidebar = document.getElementById('mySidebar');
-            if (open) {
-                sidebar.style.left = '0px'; // 讓選單滑出來
-            } else {
-                sidebar.style.left = '-250px'; // 讓選單縮回去
-            }
-        }
-
-        function toggleTheme() {
-            const currentTheme = document.documentElement.getAttribute('data-theme');
-            const themeBtn = document.getElementById('themeBtn');
-            
-            if (currentTheme === 'light') {
-                document.documentElement.removeAttribute('data-theme');
-                themeBtn.innerText = "☀️ 淺色模式";
-            } else {
-                document.documentElement.setAttribute('data-theme', 'light');
-                themeBtn.innerText = "🌙 深色模式";
-            }
-}
-    </script>
+    }
+</script>
 </body>
 </html>
