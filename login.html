@@ -51,7 +51,6 @@
         .form-group input:focus, .form-group select:focus { 
             border-color: #f39c12; 
         }
-
         select {
             cursor: pointer;
         }
@@ -100,33 +99,17 @@
         <div class="form-group">
             <label>選擇伺服器</label>
             <select id="regServer">
-                <optgroup label="—— 台港澳伺服器 ——">
+                <optgroup label="—— 台灣地區伺服器 ——">
+                    <option value="秋日森林_台服">秋日森林 (台服)</option>
+                    <option value="希望谷_台服">希望谷 (台服)</option>
+                    <option value="快樂101_台服">快樂101 (台服)</option>
                     <option value="多貝雪山_台服">多貝雪山 (台服)</option>
-                    <option value="觸星山脈_台服">觸星山脈 (台服)</option>
-                    <option value="諾倫半島_台服">諾倫半島 (台服)</option>
-                    <option value="長嶺舊港_台服">長嶺舊港 (台服)</option>
-                    <option value="平樂古城_台服">平樂古城 (台服)</option>
-                    <option value="聖托帕尼_台服">聖托帕尼 (台服)</option>
-                    <option value="貝侖草原_台服">貝侖草原 (台服)</option>
-                    <option value="墜星海畔_台服">墜星海畔 (台服)</option>
-                    <option value="梅爾醫院_台服">梅爾醫院 (台服)</option>
-                    <option value="萊文市_台服">萊文市 (台服)</option>
-                    <option value="方舟基地_台服">方舟基地 (台服)</option>
-                    <option value="重啟之地_台服">重啟之地 (台服)</option>
-                    <option value="地下城_台服">地下城 (台服)</option>
-                    <option value="希望之牆_台服">希望之牆 (台服)</option>
-                    <option value="深海秘境_台服">深海秘境 (台服)</option>
                 </optgroup>
-        
-                <optgroup label="—— 亞太混合伺服器 ——">
-                    <option value="AsiaSurvival">AsiaSurvival</option>
-                    <option value="LuckySurvival">LuckySurvival</option>
-                    <option value="RebornDay">RebornDay</option>
-                </optgroup>
-
-                <optgroup label="—— 簡單生存伺服器 ——">
-                    <option value="簡單生存服">簡單生存服</option>
-                    <option value="鷺水度假村">鷺水度假村</option>
+                <optgroup label="—— 官方陸服伺服器 ——">
+                    <option value="多貝雪山_陸服">多貝雪山 (陸服)</option>
+                    <option value="秋日森林_陸服">秋日森林 (陸服)</option>
+                    <option value="新世界_陸服">新世界 (陸服)</option>
+                    <option value="聖托帕尼_陸服">聖托帕尼 (陸服)</option>
                 </optgroup>
             </select>
         </div>
@@ -147,11 +130,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-    // 💡 修正一：移除尾巴的 /rest/v1/，只留下乾淨的主專案網址
     const SUPABASE_URL = "https://kcvojcfjstuxqausebuu.supabase.co"; 
     const SUPABASE_KEY = "sb_publishable_gthqBZh-RlfA7G4FScDMwQ_6HX3pd9j";
     
-    // 💡 修正二：改用全域 window.supabase 確保初始化時不會有名稱衝突問題
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     function toggleForm(showRegister) {
@@ -164,31 +145,36 @@
         const name = document.getElementById('regName').value.trim();
         const pwd = document.getElementById('regPwd').value.trim();
 
-        if(!name || !pwd) { alert('請填寫完整資訊！'); return; }
-
-        // 1. 檢查帳號是否重複
-        const { data: existingUser, error: checkError } = await supabase
-            .from('users')
-            .select('*')
-            .eq('username', name)
-            .maybeSingle();
-
-        if (existingUser) {
-            alert('這個遊戲名稱已經被註冊過囉，換一個試試吧！');
-            return;
+        if(!name || !pwd) { 
+            alert('請填寫完整資訊！'); 
+            return; 
         }
 
-        // 2. 寫入新帳號與 1000 初始信用點
-        const { data, error } = await supabase
-            .from('users')
-            .insert([{ username: name, password: pwd, server: server, credits: 1000 }]);
+        try {
+            const { data: existingUser, error: checkError } = await supabase
+                .from('users')
+                .select('*')
+                .eq('username', name)
+                .maybeSingle();
 
-        if (error) {
-            alert('註冊失敗，請檢查資料庫設定：' + error.message);
-        } else {
-            alert(`註冊成功！\n歡迎加入【${server}】伺服器！\n已自動為你切換至登入畫面。`);
-            toggleForm(false);
-            document.getElementById('loginName').value = name;
+            if (existingUser) {
+                alert('這個遊戲名稱已經被註冊過囉，換一個試試吧！');
+                return;
+            }
+
+            const { data, error } = await supabase
+                .from('users')
+                .insert([{ username: name, password: pwd, server: server, credits: 1000 }]);
+
+            if (error) {
+                alert('註冊失敗，請檢查資料庫設定：' + error.message);
+            } else {
+                alert(`註冊成功！\n歡迎加入【${server}】伺服器！\n已自動為你切換至登入畫面。`);
+                toggleForm(false);
+                document.getElementById('loginName').value = name;
+            }
+        } catch (err) {
+            alert('發生未預期的註冊錯誤：' + err.message);
         }
     }
 
@@ -196,29 +182,39 @@
         const name = document.getElementById('loginName').value.trim();
         const pwd = document.getElementById('loginPwd').value.trim();
 
-        if(!name || !pwd) { alert('請輸入名稱與密碼！'); return; }
-
-        const { data: userData, error } = await supabase
-            .from('users')
-            .select('*')
-            .eq('username', name)
-            .maybeSingle();
-
-        if(error || !userData) { 
-            alert('找不到該用戶，請先確認名字是否輸入正確或重新註冊！'); 
+        if(!name || !pwd) { 
+            alert('請輸入名稱與密碼！'); 
             return; 
         }
-        
-        if(userData.password === pwd) {
-            const sessionUser = { server: userData.server, name: userData.username, credits: userData.credits };
-            localStorage.setItem('currentUser', JSON.stringify(sessionUser));
+
+        try {
+            const { data: userData, error } = await supabase
+                .from('users')
+                .select('*')
+                .eq('username', name)
+                .maybeSingle();
+
+            if(error || !userData) { 
+                alert('找不到該用戶，請先確認名字是否輸入正確或重新註冊！'); 
+                return; 
+            }
             
-            window.location.href = 'index.html';
-        } else {
-            alert('密碼錯誤！');
+            if(userData.password === pwd) {
+                const sessionUser = { 
+                    server: userData.server, 
+                    name: userData.username, 
+                    credits: userData.credits 
+                };
+                localStorage.setItem('currentUser', JSON.stringify(sessionUser));
+                
+                window.location.href = 'index.html';
+            } else {
+                alert('密碼錯誤！');
+            }
+        } catch (err) {
+            alert('發生未預期的登入錯誤：' + err.message);
         }
     }
 </script>
-    
 </body>
 </html>
