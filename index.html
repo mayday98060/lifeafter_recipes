@@ -150,12 +150,6 @@
 </head>
 <body>
 
-    <div class="user-info">
-        <span id="userInfo">載入中...</span>
-        <span id="userCredits" style="margin-left: 15px; color: #f1c40f; font-weight: bold;">🪙 信用點：0</span>
-        <span class="logout-btn" onclick="logout()">登出</span>
-    </div>
-
     <div class="sidebar" id="mySidebar">
         <span class="close-sidebar" onclick="toggleSidebar(false)">&times;</span>
         <a href="#" onclick="toggleSidebar(false)" style="background-color: var(--accent-color); color: #1a1a1a;">🏠 主頁</a>
@@ -168,6 +162,11 @@
 
     <div class="navbar">
         <div class="menu-btn" onclick="toggleSidebar(true)">☰ 選單</div>
+        <div class="user-info">
+            <span id="userInfo">載入中...</span>
+            <span id="userCredits" style="margin-left: 15px; color: #f1c40f; font-weight: bold;">🪙 信用點：0</span>
+            <span class="logout-btn" onclick="logout()">登出</span>
+        </div>
     </div>
 
     <div class="container">
