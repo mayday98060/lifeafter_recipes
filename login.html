@@ -46,8 +46,15 @@
             color: #fff;
             box-sizing: border-box;
             outline: none;
+            font-size: 1rem;
         }
-        .form-group input:focus { border-color: #f39c12; }
+        .form-group input:focus, .form-group select:focus { 
+            border-color: #f39c12; 
+        }
+        /* 讓下拉選單的箭頭跟背景好看一點 */
+        select {
+            cursor: pointer;
+        }
         .btn {
             width: 100%;
             padding: 12px;
@@ -89,14 +96,19 @@
 
     <div id="registerForm" style="display: none;">
         <h2>新倖存者註冊</h2>
+        
         <div class="form-group">
-            <label>伺服器名稱</label>
+            <label>選擇伺服器</label>
             <select id="regServer">
-                <option value="秋日森林">秋日森林</option>
-                <option value="希望谷">希望谷</option>
-                <option value="快樂101">快樂101</option>
-            </select>
+                <option value="秋日森林">秋日森林 (台服)</option>
+                <option value="希望谷">希望谷 (台服)</option>
+                <option value="快樂101">快樂101 (台服)</option>
+                <option value="新世界">新世界</option>
+                <option value="多貝雪山">多貝雪山</option>
+                <option value="聖托帕尼">聖托帕尼</option>
+                </select>
         </div>
+
         <div class="form-group">
             <label>遊戲名稱 (暱稱)</label>
             <input type="text" id="regName" placeholder="請輸入遊戲角色名稱">
@@ -119,7 +131,7 @@
 
     // 註冊邏輯
     function handleRegister() {
-        const server = document.getElementById('regServer').value;
+        const server = document.getElementById('regServer').value; // 抓取下拉選單選中的數值
         const name = document.getElementById('regName').value.trim();
         const pwd = document.getElementById('regPwd').value.trim();
 
@@ -128,7 +140,8 @@
         // 儲存到 localStorage
         const userData = { server: server, name: name, pwd: pwd };
         localStorage.setItem(`user_${name}`, JSON.stringify(userData));
-        alert('註冊成功！已自動為你切換至登入畫面。');
+        
+        alert(`註冊成功！\n歡迎加入【${server}】伺服器！\n已自動為你切換至登入畫面。`);
         toggleForm(false);
         document.getElementById('loginName').value = name;
     }
@@ -145,7 +158,7 @@
         if(userData.pwd === pwd) {
             // 登入成功，記錄當前登入狀態
             localStorage.setItem('currentUser', JSON.stringify(userData));
-            window.location.href = 'index.html'; // 跳轉到主頁
+            window.location.href = 'index.html'; // 跳轉到大主頁
         } else {
             alert('密碼錯誤！');
         }
