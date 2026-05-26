@@ -156,6 +156,12 @@
 </head>
 <body>
 
+    <div class="user-info">
+        <span id="userInfo">載入中...</span>
+        <span id="userCredits" style="margin-left: 15px; color: #f1c40f; font-weight: bold;">🪙 信用點：0</span>
+        <span class="logout-btn" onclick="logout()">登出</span>
+    </div>
+
     <div class="sidebar" id="mySidebar">
         <span class="close-sidebar" onclick="toggleSidebar(false)">&times;</span>
         <a href="#" onclick="toggleSidebar(false)" style="background-color: var(--accent-color); color: #1a1a1a;">🏠 主頁</a>
@@ -213,6 +219,18 @@
             } else {
                 sidebar.style.left = '-250px'; // 讓選單縮回去
             }
+        }
+
+        // 🔥 找到 index.html 驗證登入的邏輯，修改成這樣：
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+            window.location.href = 'login.html';
+        } else {
+            const user = JSON.parse(currentUser);
+            document.getElementById('userInfo').innerText = `【${user.server}】 歡迎回來，${user.name} 倖存者`;
+            
+            // 💡 讀取暫存中的信用點並顯示在網頁上（如果剛好沒抓到，預設給 0）
+            document.getElementById('userCredits').innerText = `🪙 信用點：${user.credits || 0}`;
         }
 
         // 登出
