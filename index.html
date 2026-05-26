@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>末日生存指南</title>
     <style>
-        /* 💡 補齊基礎顏色變數，讓樣式能正確顯色 */
         :root {
             --bg-color: #1a1a1a;
             --card-bg: #2d2d2d;
@@ -22,7 +21,6 @@
             padding: 0;
         }
 
-        /* 💡 頂部全寬導覽列（整合左邊按鈕與右邊登入資訊） */
         .navbar {
             background-color: var(--card-bg);
             padding: 15px 20px;
@@ -33,7 +31,6 @@
             position: relative;
         }
 
-        /* 💡 跟食譜大全一模一樣的膠囊選單按鈕 */
         .menu-btn {
             font-size: 1.1rem;
             font-weight: bold;
@@ -51,7 +48,6 @@
             color: #fff;
         }
         
-        /* 右側用戶資訊 */
         .user-info {
             font-size: 0.9rem;
             color: #aaa;
@@ -67,7 +63,6 @@
             font-weight: bold;
         }
 
-        /* 側邊欄滑出式選單 */
         .sidebar {
             position: fixed;
             top: 0; 
@@ -107,7 +102,6 @@
             color: var(--text-color);
         }
         
-        /* 主體卡片區 */
         .container {
             max-width: 1000px;
             margin: 50px auto;
@@ -202,7 +196,6 @@
     </div>
 
     <script>
-        // 驗證是否登入，沒登入就踢回登入頁
         const currentUser = localStorage.getItem('currentUser');
         if (!currentUser) {
             window.location.href = 'login.html';
@@ -211,29 +204,25 @@
             document.getElementById('userInfo').innerText = `【${user.server}】 歡迎回來，${user.name} 倖存者`;
         }
 
-        // 側邊欄控制
         function toggleSidebar(open) {
             const sidebar = document.getElementById('mySidebar');
             if (open) {
-                sidebar.style.left = '0px'; // 讓選單滑出來
+                sidebar.style.left = '0px'; 
             } else {
-                sidebar.style.left = '-250px'; // 讓選單縮回去
+                sidebar.style.left = '-250px'; 
             }
         }
 
-        // 🔥 找到 index.html 驗證登入的邏輯，修改成這樣：
         const currentUser = localStorage.getItem('currentUser');
         if (!currentUser) {
             window.location.href = 'login.html';
         } else {
             const user = JSON.parse(currentUser);
-            document.getElementById('userInfo').innerText = `【${user.server}】 歡迎回來，${user.name} 倖存者`;
+            document.getElementById('userInfo').innerText = `【${user.server}】${user.name} 倖存者，歡迎回來~ `;
             
-            // 💡 讀取暫存中的信用點並顯示在網頁上（如果剛好沒抓到，預設給 0）
             document.getElementById('userCredits').innerText = `🪙 信用點：${user.credits || 0}`;
         }
 
-        // 登出
         function logout() {
             localStorage.removeItem('currentUser');
             window.location.href = 'login.html';
