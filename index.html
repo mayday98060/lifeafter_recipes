@@ -195,38 +195,29 @@
         </div>
     </div>
 
-    <script>
-        const currentUser = localStorage.getItem('currentUser');
-        if (!currentUser) {
-            window.location.href = 'login.html';
+<script>
+    const currentUser = localStorage.getItem('currentUser');
+    if (!currentUser) {
+        window.location.href = 'login.html';
+    } else {
+        const user = JSON.parse(currentUser);
+        document.getElementById('userInfo').innerText = `【${user.server}】${user.name} 倖存者，歡迎回來~ `;
+        document.getElementById('userCredits').innerText = `🪙 信用點：${user.credits || 0}`;
+    }
+
+    function toggleSidebar(open) {
+        const sidebar = document.getElementById('mySidebar');
+        if (open) {
+            sidebar.style.left = '0px'; 
         } else {
-            const user = JSON.parse(currentUser);
-            document.getElementById('userInfo').innerText = `【${user.server}】 歡迎回來，${user.name} 倖存者`;
+            sidebar.style.left = '-250px'; 
         }
+    }
 
-        function toggleSidebar(open) {
-            const sidebar = document.getElementById('mySidebar');
-            if (open) {
-                sidebar.style.left = '0px'; 
-            } else {
-                sidebar.style.left = '-250px'; 
-            }
-        }
-
-        const currentUser = localStorage.getItem('currentUser');
-        if (!currentUser) {
-            window.location.href = 'login.html';
-        } else {
-            const user = JSON.parse(currentUser);
-            document.getElementById('userInfo').innerText = `【${user.server}】${user.name} 倖存者，歡迎回來~ `;
-            
-            document.getElementById('userCredits').innerText = `🪙 信用點：${user.credits || 0}`;
-        }
-
-        function logout() {
-            localStorage.removeItem('currentUser');
-            window.location.href = 'login.html';
-        }
-    </script>
+    function logout() {
+        localStorage.removeItem('currentUser');
+        window.location.href = 'login.html';
+    }
+</script>
 </body>
 </html>
