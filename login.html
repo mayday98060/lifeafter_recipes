@@ -183,7 +183,7 @@
         // 2. 塞入新玩家資料到 Supabase
         const { data, error } = await supabase
             .from('users')
-            .insert([{ username: name, password: pwd, server: server }]);
+            .insert([{ username: name, password: pwd, server: server, credits: 1000 }]);
 
         if (error) {
             alert('註冊失敗，請檢查資料庫設定：' + error.message);
