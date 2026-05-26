@@ -202,7 +202,7 @@
         window.location.href = 'login.html';
     } else {
         const user = JSON.parse(currentUser);
-        document.getElementById('userInfo').innerText = `【${user.server}】${user.name} 倖存者，歡迎回來~ `;
+        document.getElementById('userInfo').innerText = `【${user.server}】${user.name}，歡迎回來~ `;
         document.getElementById('userCredits').innerText = `🪙 信用點：${user.credits || 0}`;
     }
 
