@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>明日之後圖鑑 - 登入/註冊</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .auth-container {
+            background-color: #2d2d2d;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+            width: 350px;
+            border: 1px solid #f39c12;
+        }
+        h2 {
+            text-align: center;
+            color: #f39c12;
+            margin-top: 0;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #444;
+            background-color: #1a1a1a;
+            color: #fff;
+            box-sizing: border-box;
+            outline: none;
+        }
+        .form-group input:focus { border-color: #f39c12; }
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #f39c12;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn:hover { background-color: #e67e22; }
+        .toggle-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: #5dade2;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div class="auth-container">
+    <div id="loginForm">
+        <h2>倖存者登入</h2>
+        <div class="form-group">
+            <label>遊戲名稱 (暱稱)</label>
+            <input type="text" id="loginName" placeholder="請輸入遊戲名稱">
+        </div>
+        <div class="form-group">
+            <label>密碼</label>
+            <input type="password" id="loginPwd" placeholder="請輸入密碼">
+        </div>
+        <button class="btn" onclick="handleLogin()">登入營地</button>
+        <p class="toggle-text" onclick="toggleForm(true)">還沒有帳號？前往註冊</p>
+    </div>
+
+    <div id="registerForm" style="display: none;">
+        <h2>新倖存者註冊</h2>
+        <div class="form-group">
+            <label>伺服器名稱</label>
+            <select id="regServer">
+                <option value="秋日森林">秋日森林</option>
+                <option value="希望谷">希望谷</option>
+                <option value="快樂101">快樂101</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>遊戲名稱 (暱稱)</label>
+            <input type="text" id="regName" placeholder="請輸入遊戲角色名稱">
+        </div>
+        <div class="form-group">
+            <label>設定密碼</label>
+            <input type="password" id="regPwd" placeholder="請設定密碼">
+        </div>
+        <button class="btn" onclick="handleRegister()">完成註冊</button>
+        <p class="toggle-text" onclick="toggleForm(false)">已有帳號？返回登入</p>
+    </div>
+</div>
+
+<script>
+    // 切換登入與註冊畫面
+    function toggleForm(showRegister) {
+        document.getElementById('loginForm').style.display = showRegister ? 'none' : 'block';
+        document.getElementById('registerForm').style.display = showRegister ? 'block' : 'none';
+    }
+
+    // 註冊邏輯
+    function handleRegister() {
+        const server = document.getElementById('regServer').value;
+        const name = document.getElementById('regName').value.trim();
+        const pwd = document.getElementById('regPwd').value.trim();
+
+        if(!name || !pwd) { alert('請填寫完整資訊！'); return; }
+
+        // 儲存到 localStorage
+        const userData = { server: server, name: name, pwd: pwd };
+        localStorage.setItem(`user_${name}`, JSON.stringify(userData));
+        alert('註冊成功！已自動為你切換至登入畫面。');
+        toggleForm(false);
+        document.getElementById('loginName').value = name;
+    }
+
+    // 登入邏輯
+    function handleLogin() {
+        const name = document.getElementById('loginName').value.trim();
+        const pwd = document.getElementById('loginPwd').value.trim();
+
+        const storedUser = localStorage.getItem(`user_${name}`);
+        if(!storedUser) { alert('找不到該用戶，請先註冊！'); return; }
+
+        const userData = JSON.parse(storedUser);
+        if(userData.pwd === pwd) {
+            // 登入成功，記錄當前登入狀態
+            localStorage.setItem('currentUser', JSON.stringify(userData));
+            window.location.href = 'index.html'; // 跳轉到主頁
+        } else {
+            alert('密碼錯誤！');
+        }
+    }
+</script>
+</body>
+</html>
