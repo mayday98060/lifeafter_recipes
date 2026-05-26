@@ -51,9 +51,6 @@
         .form-group input:focus, .form-group select:focus { 
             border-color: #f39c12; 
         }
-        select {
-            cursor: pointer;
-        }
         .btn {
             width: 100%;
             padding: 12px;
@@ -95,25 +92,13 @@
 
     <div id="registerForm" style="display: none;">
         <h2>新倖存者註冊</h2>
-        
         <div class="form-group">
             <label>選擇伺服器</label>
             <select id="regServer">
-                <optgroup label="—— 台灣地區伺服器 ——">
-                    <option value="秋日森林_台服">秋日森林 (台服)</option>
-                    <option value="希望谷_台服">希望谷 (台服)</option>
-                    <option value="快樂101_台服">快樂101 (台服)</option>
-                    <option value="多貝雪山_台服">多貝雪山 (台服)</option>
-                </optgroup>
-                <optgroup label="—— 官方陸服伺服器 ——">
-                    <option value="多貝雪山_陸服">多貝雪山 (陸服)</option>
-                    <option value="秋日森林_陸服">秋日森林 (陸服)</option>
-                    <option value="新世界_陸服">新世界 (陸服)</option>
-                    <option value="聖托帕尼_陸服">聖托帕尼 (陸服)</option>
-                </optgroup>
+                <option value="多貝雪山_台服">多貝雪山 (台服)</option>
+                <option value="希望谷_台服">希望谷 (台服)</option>
             </select>
         </div>
-
         <div class="form-group">
             <label>遊戲名稱 (暱稱)</label>
             <input type="text" id="regName" placeholder="請輸入遊戲角色名稱">
@@ -130,25 +115,33 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
+    // 💡 1. 這邊幫你換上畫面上正確的 URL 了
     const SUPABASE_URL = "https://kcvojcfjstuxqausebuu.supabase.co"; 
+    
+    // ⚠️ 2. 請把下面這行引號內的假字串，換成你剛剛在 Supabase 後台複製的那串超長 anon key！
     const SUPABASE_KEY = "sb_publishable_gthqBZh-RlfA7G4FScDMwQ_6HX3pd9j";
     
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    // 全域初始化
+    let supabase;
+    try {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    } catch (e) {
+        console.error("Supabase 初始化失敗，請檢查金鑰：", e);
+    }
 
+    // 表單切換
     function toggleForm(showRegister) {
         document.getElementById('loginForm').style.display = showRegister ? 'none' : 'block';
         document.getElementById('registerForm').style.display = showRegister ? 'block' : 'none';
     }
 
+    // 註冊
     async function handleRegister() {
         const server = document.getElementById('regServer').value;
         const name = document.getElementById('regName').value.trim();
         const pwd = document.getElementById('regPwd').value.trim();
 
-        if(!name || !pwd) { 
-            alert('請填寫完整資訊！'); 
-            return; 
-        }
+        if(!name || !pwd) { alert('請填寫完整資訊！'); return; }
 
         try {
             const { data: existingUser, error: checkError } = await supabase
@@ -158,34 +151,32 @@
                 .maybeSingle();
 
             if (existingUser) {
-                alert('這個遊戲名稱已經被註冊過囉，換一個試試吧！');
+                alert('這個遊戲名稱已經被註冊過囉！');
                 return;
             }
 
-            const { data, error } = await supabase
+            const { error } = await supabase
                 .from('users')
                 .insert([{ username: name, password: pwd, server: server, credits: 1000 }]);
 
             if (error) {
-                alert('註冊失敗，請檢查資料庫設定：' + error.message);
+                alert('註冊失敗：' + error.message);
             } else {
-                alert(`註冊成功！\n歡迎加入【${server}】伺服器！\n已自動為你切換至登入畫面。`);
+                alert('註冊成功！已切換至登入畫面。');
                 toggleForm(false);
                 document.getElementById('loginName').value = name;
             }
         } catch (err) {
-            alert('發生未預期的註冊錯誤：' + err.message);
+            alert('註冊連線錯誤：' + err.message);
         }
     }
 
+    // 登入
     async function handleLogin() {
         const name = document.getElementById('loginName').value.trim();
         const pwd = document.getElementById('loginPwd').value.trim();
 
-        if(!name || !pwd) { 
-            alert('請輸入名稱與密碼！'); 
-            return; 
-        }
+        if(!name || !pwd) { alert('請輸入名稱與密碼！'); return; }
 
         try {
             const { data: userData, error } = await supabase
@@ -195,7 +186,7 @@
                 .maybeSingle();
 
             if(error || !userData) { 
-                alert('找不到該用戶，請先確認名字是否輸入正確或重新註冊！'); 
+                alert('找不到該用戶，請先確認名字是否正確！'); 
                 return; 
             }
             
@@ -206,13 +197,12 @@
                     credits: userData.credits 
                 };
                 localStorage.setItem('currentUser', JSON.stringify(sessionUser));
-                
                 window.location.href = 'index.html';
             } else {
                 alert('密碼錯誤！');
             }
         } catch (err) {
-            alert('發生未預期的登入錯誤：' + err.message);
+            alert('登入連線錯誤：' + err.message);
         }
     }
 </script>
