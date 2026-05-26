@@ -149,7 +149,12 @@
 
         // 側邊欄控制
         function toggleSidebar(open) {
-            document.getElementById('mySidebar').style.left = open ? '0px' : '-250px';
+            const sidebar = document.getElementById('mySidebar');
+            if (open) {
+                sidebar.style.left = '0px'; // 讓選單滑出來
+            } else {
+                sidebar.style.left = '-250px'; // 讓選單縮回去
+            }
         }
 
         // 登出
