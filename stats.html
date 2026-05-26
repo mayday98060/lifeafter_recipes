@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>末世生存指南 - 各伺服器使用者人數統計</title>
     <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-color: #ffffff;
+            --accent-color: #f39c12;
+            --section-border: #444;
+        }
+
         body {
             font-family: 'Microsoft JhengHei', sans-serif;
             background-color: #1a1a1a;
@@ -24,6 +32,7 @@
             max-width: 500px;
             border: 1px solid #f39c12;
             box-sizing: border-box;
+            margin-top: 40px;
         }
         h2 {
             text-align: center;
@@ -80,9 +89,86 @@
             color: #aaa;
             font-style: italic;
         }
+
+        .top-nav-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 99;
+        }
+        
+        .menu-btn {
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--text-color);
+            background-color: var(--card-bg);
+            border: 1px solid var(--accent-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-btn:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0; 
+            left: -250px; 
+            width: 250px; 
+            height: 100%;
+            background-color: var(--card-bg);
+            z-index: 2000; 
+            transition: 0.3s ease;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+            padding-top: 60px;
+            box-sizing: border-box;
+            border-right: 1px solid var(--section-border);
+        }
+        
+        .sidebar a {
+            display: block;
+            padding: 15px 25px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--section-border);
+            transition: all 0.2s;
+        }
+        
+        .sidebar a:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+        
+        .close-sidebar {
+            position: absolute;
+            top: 15px; 
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
     </style>
 </head>
 <body>
+
+<div class="sidebar" id="mySidebar">
+    <span class="close-sidebar" onclick="toggleSidebar(false)">&times;</span>
+    <a href="index.html">🏠 主頁</a>
+    <a href="recipes-page.html">🍳 食譜攻略圖鑑</a>
+    <a href="#" onclick="alert('武器圖鑑正在籌備中！')">⚔️ 裝備圖鑑</a>
+    <a href="#" onclick="alert('資源圖鑑正在籌備中！')">🗺️ 資源圖鑑</a>
+    <a href="#" onclick="alert('生物圖鑑正在籌備中！')">🧟 生物圖鑑</a>
+    <a href="stats.html" style="background-color: var(--accent-color); color: #1a1a1a;">📊 使用者統計</a>
+</div>
+
+<div class="top-nav-bar">
+    <div class="menu-btn" onclick="toggleSidebar(true)">☰ 選單</div>
+</div>
 
 <div class="stats-container">
     <h2>📊 各伺服器使用者人數統計</h2>
@@ -96,7 +182,7 @@
 
 <script>
     const SUPABASE_URL = "https://kcvojcfjstuxqausebuu.supabase.co"; 
-    const SUPABASE_KEY = "sb_publishable_gthqBZh-RlfA7G4FScDMwQ_6HX3pd9j"; 
+    const SUPABASE_KEY = "sb_publishable_gthqBZh-RlfA7G4FScDMwQ_6HX3pd9j";
     const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     fetchServerStats();
@@ -141,6 +227,15 @@
         } catch (err) {
             console.error("統計失敗：", err.message);
             document.getElementById('statsBox').innerHTML = `<p style="color: #e74c3c; text-align:center;">數據載入失敗，請檢查網路連線。</p>`;
+        }
+    }
+
+    function toggleSidebar(open) {
+        const sidebar = document.getElementById('mySidebar');
+        if (open) {
+            sidebar.style.left = '0px'; 
+        } else {
+            sidebar.style.left = '-250px'; 
         }
     }
 </script>
