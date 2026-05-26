@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>明日之後終極圖鑑中心</title>
+    <style>
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            background-color: #1a1a1a;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        /* 頂部導覽列 */
+        .navbar {
+            background-color: #2d2d2d;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #f39c12;
+        }
+        /* 漢堡選單按鈕 */
+        .menu-btn {
+            font-size: 24px;
+            cursor: pointer;
+            color: #f39c12;
+        }
+        .user-info {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        .logout-btn {
+            color: #ff4d4d;
+            cursor: pointer;
+            margin-left: 10px;
+            text-decoration: underline;
+        }
+        /* 側邊欄樣式 */
+        .sidebar {
+            position: fixed;
+            top: 0; left: -250px;
+            width: 250px; height: 100%;
+            background-color: #2d2d2d;
+            z-index: 100;
+            transition: 0.3s;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+            padding-top: 60px;
+        }
+        .sidebar a {
+            display: block;
+            padding: 15px 25px;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.1rem;
+            border-bottom: 1px solid #444;
+        }
+        .sidebar a:hover {
+            background-color: #f39c12;
+            color: #1a1a1a;
+        }
+        .close-sidebar {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+        /* 主體卡片區 */
+        .container {
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+        h1 { color: #f39c12; margin-bottom: 40px; }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        .portal-card {
+            background-color: #2d2d2d;
+            border: 1px solid #444;
+            border-radius: 12px;
+            padding: 40px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .portal-card:hover {
+            transform: translateY(-5px);
+            border-color: #f39c12;
+            box-shadow: 0 5px 15px rgba(243,156,18,0.2);
+        }
+        .portal-card h3 { color: #f39c12; margin-top: 0; font-size: 1.4rem; }
+        .portal-card p { color: #aaa; font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <div class="sidebar" id="mySidebar">
+        <span class="close-sidebar" onclick="toggleSidebar(false)">&times;</span>
+        <a href="index.html">🏠 控制台主頁</a>
+        <a href="recipes-page.html">🍳 食譜攻略圖鑑</a>
+        <a href="#" onclick="alert('武器圖鑑正在籌備中！')">⚔️ 武器配方圖鑑</a>
+        <a href="#" onclick="alert('怪物分佈圖鑑正在籌備中！')">🧟 感染體圖鑑</a>
+    </div>
+
+    <div class="navbar">
+        <div class="menu-btn" onclick="toggleSidebar(true)">☰</div>
+        <div class="user-info">
+            <span id="userInfo">載入中...</span>
+            <span class="logout-btn" onclick="logout()">登出</span>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1>末日生存指南 - 終極資料庫</h1>
+        <div class="grid">
+            <div class="portal-card" onclick="window.location.href='recipes-page.html'">
+                <h3>🍳 食譜攻略大全</h3>
+                <p>收錄全網最完整的末日料理，支援多功能模糊搜尋與效果加成查詢。</p>
+            </div>
+            <div class="portal-card" onclick="alert('護甲與武器模組圖鑑正在加緊製作中！')">
+                <h3>⚔️ 武器裝備圖鑑</h3>
+                <p>各階層護甲、槍械與冷兵器製作材料清單（期待開放）。</p>
+            </div>
+            <div class="portal-card" onclick="alert('採集資源地圖即將登場！')">
+                <h3>🗺️ 物資採集地圖</h3>
+                <p>各個協議區、交火區特產物資分佈與採集路線（期待開放）。</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 驗證是否登入，沒登入就踢回登入頁
+        const currentUser = localStorage.getItem('currentUser');
+        if (!currentUser) {
+            window.location.href = 'login.html';
+        } else {
+            const user = JSON.parse(currentUser);
+            document.getElementById('userInfo').innerText = `【${user.server}】 歡迎回來，${user.name} 倖存者`;
+        }
+
+        // 側邊欄控制
+        function toggleSidebar(open) {
+            document.getElementById('mySidebar').style.left = open ? '0px' : '-250px';
+        }
+
+        // 登出
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
