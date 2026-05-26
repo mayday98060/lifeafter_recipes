@@ -147,10 +147,12 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-    const SUPABASE_URL = "https://kcvojcfjstuxqausebuu.supabase.co/rest/v1/"; 
+    // 💡 修正一：移除尾巴的 /rest/v1/，只留下乾淨的主專案網址
+    const SUPABASE_URL = "https://kcvojcfjstuxqausebuu.supabase.co"; 
     const SUPABASE_KEY = "sb_publishable_gthqBZh-RlfA7G4FScDMwQ_6HX3pd9j";
     
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    // 💡 修正二：改用全域 window.supabase 確保初始化時不會有名稱衝突問題
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     function toggleForm(showRegister) {
         document.getElementById('loginForm').style.display = showRegister ? 'none' : 'block';
@@ -164,6 +166,7 @@
 
         if(!name || !pwd) { alert('請填寫完整資訊！'); return; }
 
+        // 1. 檢查帳號是否重複
         const { data: existingUser, error: checkError } = await supabase
             .from('users')
             .select('*')
@@ -175,6 +178,7 @@
             return;
         }
 
+        // 2. 寫入新帳號與 1000 初始信用點
         const { data, error } = await supabase
             .from('users')
             .insert([{ username: name, password: pwd, server: server, credits: 1000 }]);
