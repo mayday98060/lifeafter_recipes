@@ -142,19 +142,14 @@
 
 <script>
     const SUPABASE_URL = "https://kcvojcfjstuxqausebuu.supabase.co"; 
-    // ⚠️ 這裡請確保換成你剛剛複製的、完整的超長金鑰！
     const SUPABASE_KEY = "你複製的超長金鑰"; 
-    
-    // 💡 修正點：將變數名稱改成 db，徹底避開命名衝突！
     const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // 表單切換
     function toggleForm(showRegister) {
         document.getElementById('loginForm').style.display = showRegister ? 'none' : 'block';
         document.getElementById('registerForm').style.display = showRegister ? 'block' : 'none';
     }
 
-    // 註冊
     async function handleRegister() {
         const server = document.getElementById('regServer').value;
         const name = document.getElementById('regName').value.trim();
@@ -163,7 +158,6 @@
         if(!name || !pwd) { alert('請填寫完整資訊！'); return; }
 
         try {
-            // 💡 這裡改成用 db 查詢
             const { data: existingUser, error: checkError } = await db
                 .from('users')
                 .select('*')
@@ -175,7 +169,6 @@
                 return;
             }
 
-            // 💡 這裡改成用 db 寫入
             const { error } = await db
                 .from('users')
                 .insert([{ username: name, password: pwd, server: server, credits: 1000 }]);
@@ -192,7 +185,6 @@
         }
     }
 
-    // 登入
     async function handleLogin() {
         const name = document.getElementById('loginName').value.trim();
         const pwd = document.getElementById('loginPwd').value.trim();
@@ -200,7 +192,6 @@
         if(!name || !pwd) { alert('請輸入名稱與密碼！'); return; }
 
         try {
-            // 💡 這裡改成用 db 查詢
             const { data: userData, error } = await db
                 .from('users')
                 .select('*')
