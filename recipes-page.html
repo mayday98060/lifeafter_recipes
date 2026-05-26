@@ -200,6 +200,71 @@
             font-size: 0.8rem;
             color: #888;
         }
+
+        /* 💡 頂部導覽按鈕區域 */
+        .top-nav-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 99;
+        }
+        
+        .menu-btn {
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--text-color);
+            background-color: var(--card-bg);
+            border: 1px solid var(--accent-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-btn:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+        
+        /* 💡 側邊欄滑出式選單 */
+        .sidebar {
+            position: fixed;
+            top: 0; 
+            left: -250px; /* 預設藏在螢幕左邊外面 */
+            width: 250px; 
+            height: 100%;
+            background-color: var(--card-bg);
+            z-index: 2000; /* 確保在最上層，不會被食譜卡片遮住 */
+            transition: 0.3s ease;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+            padding-top: 60px;
+            box-sizing: border-box;
+            border-right: 1px solid var(--section-border);
+        }
+        
+        .sidebar a {
+            display: block;
+            padding: 15px 25px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--section-border);
+            transition: all 0.2s;
+        }
+        
+        .sidebar a:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+        
+        .close-sidebar {
+            position: absolute;
+            top: 15px; 
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
     </style>
 </head>
 <body>
@@ -327,6 +392,16 @@
         window.onclick = function(event) {
             if (event.target == modal) {
                 closeModal();
+            }
+        }
+
+        // 💡 控制左上角側邊欄開關
+        function toggleSidebar(open) {
+            const sidebar = document.getElementById('mySidebar');
+            if (open) {
+                sidebar.style.left = '0px'; // 讓選單滑出來
+            } else {
+                sidebar.style.left = '-250px'; // 讓選單縮回去
             }
         }
 
