@@ -24,12 +24,12 @@ const INGREDIENTS_DATA = [
         source: "野外淡水流域\n營地魚塘、夏爾鎮、銀翼基地、鬼影山、荒土曠野、殘垣戈壁、烏茨礦場"
     },
     {
-        name: "蜂蜜",
-        rarity: "rare-blue",
+        name: "鯉魚",
+        rarity: "rare-green",
         rarityText: "珍稀",
-        image: "images/ingredients/honey.jpg",
-        description: "純天然的高能量甜味劑。單獨食用即可恢復大量飢餓度，加入料理中（如蜜汁烤肉、蜂蜜水）更能賦予食物強大的生命回復屬性。",
-        source: "在「秋日森林」野外砍伐帶有蜂巢的大樹，蜂巢掉落後採集取得。注意採集時可能會遭到蜜蜂攻擊。"
+        image: "ingredients/鯉魚.png",
+        description: "習性:雜食性淡水魚\n一種非常漂亮的魚，有人說它代表著幸運，可用於烹飪。",
+        source: "野外淡水流域\n營地魚塘、晴空麥田、亞述丘陵、夏爾鎮、銀翼基地、多貝雪山、密斯卡鎮"
     },
     {
         name: "冰塊",
