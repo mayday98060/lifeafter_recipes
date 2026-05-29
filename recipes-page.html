@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>末日存指南-食譜大全</title>
+    <title>末日存指南-食譜圖鑑</title>
     <style>
         :root {
             --bg-color: #1a1a1a;
@@ -227,24 +227,23 @@
             cursor: pointer;
             color: var(--text-color);
         }
-        /* 📡 末日電台懸浮窗樣式 */
+        
         .radio-hud {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: rgba(30, 30, 30, 0.75); /* 半透明黑 */
+            background: rgba(30, 30, 30, 0.75);
             border: 1px solid #4a5d5e;
             border-radius: 6px;
             padding: 12px 16px;
             box-shadow: inset 0 0 10px rgba(0, 255, 200, 0.05), 0 8px 20px rgba(0,0,0,0.5);
             z-index: 1000;
-            backdrop-filter: blur(5px); /* 背景模糊特效，很有質感 */
+            backdrop-filter: blur(5px); 
             width: 240px;
             box-sizing: border-box;
             transition: all 0.3s ease;
         }
         
-        /* 懸停時稍微亮起 */
         .radio-hud:hover {
             border-color: #5dade2;
             background: rgba(35, 35, 35, 0.9);
@@ -253,7 +252,7 @@
         .hud-title {
             font-size: 0.85rem;
             font-weight: bold;
-            color: #5dade2; /* 科技青藍色 */
+            color: #5dade2; 
             border-bottom: 1px dashed #444;
             padding-bottom: 6px;
             margin-bottom: 8px;
@@ -262,7 +261,6 @@
             letter-spacing: 1px;
         }
         
-        /* 綠色呼吸燈小圓點 */
         .pulse-dot {
             width: 6px;
             height: 6px;
@@ -293,7 +291,7 @@
         }
         
         .hud-content a {
-            color: #f39c12; /* 橙色對齊你的主體色 */
+            color: #f39c12;
             text-decoration: none;
             font-weight: bold;
             border-bottom: 1px solid transparent;
@@ -305,7 +303,6 @@
             color: #f5b041;
         }
         
-        /* 📱 手機板自動隱藏，避免擋住畫面 */
         @media (max-width: 768px) {
             .radio-hud {
                 position: static;
@@ -325,7 +322,7 @@
     </div>
     <div class="hud-content">
         <p>⏱️ 最後更新：<span>2026.05.29</span></p>
-        <p>📡 聯絡/報錯：<a href="你的DISCORD連結" target="_blank">Discord 交流群</a></p>
+        <p>📡 聯絡/報錯：<a href="https://discord.gg/Tu7gfey5" target="_blank">Discord 交流群</a></p>
     </div>
 </div>
 
@@ -343,7 +340,7 @@
     <div class="menu-btn" onclick="toggleSidebar(true)">☰ 選單</div>
 </div>
 
-<h1>末日生存指南-食譜大全</h1>
+<h1>末日生存指南-食譜圖鑑</h1>
 
 <div class="search-container">
     <input type="text" id="searchInput" placeholder="輸入料理名稱、食材或效果（如：射速、暴擊）..." oninput="filterRecipes()">
