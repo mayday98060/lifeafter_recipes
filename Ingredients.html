@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>末世生存指南 - 食材圖鑑</title>
+    <title>末日生存指南-食材圖鑑</title>
     <style>
         :root {
             --bg-color: #1a1a1a;
             --card-bg: #2d2d2d;
             --text-color: #ffffff;
             --accent-color: #f39c12;
+            --modal-border: #f39c12;
             --section-border: #444;
         }
 
@@ -17,73 +18,57 @@
             font-family: 'Microsoft JhengHei', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-color);
-            padding: 40px 20px;
             margin: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 20px;
         }
 
-        .ingredients-container {
-            width: 100%;
-            max-width: 900px;
-            margin-top: 60px;
-            box-sizing: border-box;
-        }
-
-        h2 {
+        h1 {
             text-align: center;
             color: var(--accent-color);
-            margin-bottom: 10px;
-            font-size: 2rem;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #aaa;
             margin-bottom: 30px;
-            font-size: 1rem;
         }
 
         .ingredients-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 20px;
-            width: 100%;
+            grid-template-columns: repeat(auto-fill, 128px);
+            gap: 15px; 
+            max-width: 1200px;
+            margin: 0 auto;
+            justify-content: center; 
         }
 
         .ingredient-card {
             background-color: var(--card-bg);
-            border: 1px solid var(--section-border);
-            border-radius: 12px;
+            border-radius: 8px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            transition: all 0.3s ease;
+            cursor: pointer;
+            transition: transform 0.2s;
+            border: 1px solid #444;
             display: flex;
             flex-direction: column;
+            position: relative;
         }
 
         .ingredient-card:hover {
             transform: translateY(-5px);
-            border-color: var(--accent-color);
-            box-shadow: 0 8px 25px rgba(243, 156, 18, 0.2);
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
         }
 
         .image-container {
-            width: 100%;
-            height: 160px;
+            width: 128px;
+            height: 128px;
             background-color: #1a1a1a;
-            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            border-bottom: 1px solid var(--section-border);
+            position: relative;
         }
 
         .no-img-text {
-            color: #555;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
+            color: #444;
+            font-size: 0.65rem;
+            text-align: center;
+            padding: 5px;
         }
 
         .ingredient-img {
@@ -95,26 +80,72 @@
             left: 0;
         }
 
-        .card-content {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
+        .ingredient-name {
+            padding: 10px 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            background-color: var(--card-bg);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
-        .ingredient-name {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: var(--accent-color);
-            margin: 0 0 10px 0;
-            display: flex;
+        /* 💡 彈窗樣式 (Modal) */
+        .modal {
+            display: none; 
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
             align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            border: 2px solid var(--accent-color);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 15px; right: 20px;
+            font-size: 30px;
+            cursor: pointer;
+            color: #aaa;
+        }
+
+        .close-btn:hover { color: #fff; }
+
+        .modal-title {
+            color: var(--accent-color);
+            margin-top: 0;
+            font-size: 1.8rem;
+            display: flex;
             justify-content: space-between;
+            align-items: center;
+            padding-right: 25px;
+        }
+
+        .modal-section {
+            margin: 15px 0;
+            border-bottom: 1px solid #444;
+            padding-bottom: 10px;
+        }
+
+        .modal-section strong {
+            color: #5dade2;
         }
 
         .rarity-tag {
-            font-size: 0.75rem;
-            padding: 3px 8px;
+            font-size: 0.8rem;
+            padding: 4px 12px;
             border-radius: 20px;
             font-weight: normal;
         }
@@ -122,30 +153,28 @@
         .rare-green { background: #2ecc71; color: #1a1a1a; }
         .rare-blue { background: #3498db; color: #fff; }
 
-        .description {
-            font-size: 0.95rem;
-            color: #ddd;
-            line-height: 1.5;
-            margin: 0 0 15px 0;
-            flex-grow: 1;
+        .search-container {
+            max-width: 500px;
+            margin: 0 auto 30px auto;
+            text-align: center;
         }
-
-        .source-box {
-            background-color: rgba(0, 0, 0, 0.2);
-            border-left: 3px solid #5dade2;
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-size: 0.85rem;
+        
+        #searchInput {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 2px solid var(--section-border);
+            border-radius: 25px;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            outline: none;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
         }
-
-        .source-title {
-            font-weight: bold;
-            color: #5dade2;
-            margin-bottom: 3px;
-        }
-
-        .source-text {
-            color: #bbb;
+        
+        #searchInput:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 8px rgba(243, 156, 18, 0.3);
         }
 
         .top-nav-bar {
@@ -210,15 +239,110 @@
             cursor: pointer;
             color: var(--text-color);
         }
+        
+        .radio-hud {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(30, 30, 30, 0.75);
+            border: 1px solid #4a5d5e;
+            border-radius: 6px;
+            padding: 12px 16px;
+            box-shadow: inset 0 0 10px rgba(0, 255, 200, 0.05), 0 8px 20px rgba(0,0,0,0.5);
+            z-index: 1000;
+            backdrop-filter: blur(5px); 
+            width: 240px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
+        .radio-hud:hover {
+            border-color: #5dade2;
+            background: rgba(35, 35, 35, 0.9);
+        }
+        
+        .hud-title {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #5dade2; 
+            border-bottom: 1px dashed #444;
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            letter-spacing: 1px;
+        }
+        
+        .pulse-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #2ecc71;
+            border-radius: 50%;
+            margin-right: 8px;
+            display: inline-block;
+            box-shadow: 0 0 8px #2ecc71;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(0.9); opacity: 0.6; box-shadow: 0 0 4px #2ecc71; }
+            50% { transform: scale(1.1); opacity: 1; box-shadow: 0 0 10px #2ecc71; }
+            100% { transform: scale(0.9); opacity: 0.6; box-shadow: 0 0 4px #2ecc71; }
+        }
+        
+        .hud-content p {
+            margin: 4px 0;
+            font-size: 0.8rem;
+            color: #aaa;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .hud-content p span {
+            color: #ddd;
+        }
+        
+        .hud-content a {
+            color: #f39c12;
+            text-decoration: none;
+            font-weight: bold;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .hud-content a:hover {
+            border-color: #f39c12;
+            color: #f5b041;
+        }
+        
+        @media (max-width: 768px) {
+            .radio-hud {
+                position: static;
+                margin: 20px auto;
+                width: 100%;
+                max-width: 400px;
+            }
+        }
     </style>
 </head>
 <body>
 
+<div class="radio-hud">
+    <div class="hud-title">
+        <span class="pulse-dot"></span>
+        電台狀態 (SYSTEM STATUS)
+    </div>
+    <div class="hud-content">
+        <p>⏱️ 最後更新：<span>2026.05.29</span></p>
+        <p>📡 聯絡/報錯：<a href="https://discord.gg/Tu7gfey5" target="_blank">Discord 交流群</a></p>
+    </div>
+</div>
+
 <div class="sidebar" id="mySidebar">
     <span class="close-sidebar" onclick="toggleSidebar(false)">&times;</span>
-    <a href="index.html">🏠 主頁</a>
+    <a href="index.html">🏠 返回主頁</a>
     <a href="recipes-page.html">🍳 食譜圖鑑</a>
-    <a href="#" onclick="alert('武器圖鑑正在籌備中！')">⚔️ 裝備圖鑑</a>
+    <a href="#" onclick="alert('裝備圖鑑正在籌備中！')">⚔️ 裝備圖鑑</a>
     <a href="Ingredients.html" style="background-color: var(--accent-color); color: #1a1a1a;">🗺️ 食材圖鑑</a>
     <a href="#" onclick="alert('生物圖鑑正在籌備中！')">🧟 生物圖鑑</a>
     <a href="stats.html">📊 使用者統計</a>
@@ -228,44 +352,113 @@
     <div class="menu-btn" onclick="toggleSidebar(true)">☰ 選單</div>
 </div>
 
-<div class="ingredients-container">
-    <h2>🪵 末世生存指南-食材圖鑑</h2>
-    <div class="subtitle">末日烹飪的基石，了解食材來源是每位倖存者的必修課。</div>
+<h1>末日生存指南-食材圖鑑</h1>
 
-    <div class="ingredients-grid" id="ingredientsGrid"></div>
+<div class="search-container">
+    <input type="text" id="searchInput" placeholder="輸入食材名稱、稀有度或獲取來源..." oninput="filterIngredients()">
+</div>
+
+<div class="ingredients-grid" id="ingredientsGrid"></div>
+
+<div class="modal" id="ingredientModal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2 class="modal-title">
+            <span id="modalName">食材名稱</span>
+            <span id="modalRarity" class="rarity-tag">稀有度</span>
+        </h2>
+        
+        <div class="modal-section">
+            <strong>【食材介紹】</strong>
+            <p id="modalDesc">這裡顯示食材的詳細故事或介紹。</p>
+        </div>
+        
+        <div class="modal-section">
+            <strong>📍【獲取來源】</strong>
+            <p id="modalSource" style="color: #bbb;"></p>
+        </div>
+    </div>
 </div>
 
 <script src="ingredients-data.js"></script>
 
 <script>
-    renderIngredients();
-
-    function renderIngredients() {
+    function displayIngredients(ingredientsToRender) {
         const grid = document.getElementById('ingredientsGrid');
-        
-        const htmlContent = INGREDIENTS_DATA.map(item => `
-            <div class="ingredient-card">
+        grid.innerHTML = "";
+    
+        if (ingredientsToRender.length === 0) {
+            grid.innerHTML = "<p style='text-align:center; color:#888; grid-column: 1/-1;'>找不到符合條件的物資 😭</p>";
+            return;
+        }
+    
+        ingredientsToRender.forEach((item) => {
+            const originalIndex = INGREDIENTS_DATA.findIndex(i => i.name === item.name);
+    
+            const card = document.createElement('div');
+            card.className = 'ingredient-card';
+            card.onclick = () => openModal(originalIndex);
+            
+            card.innerHTML = `
                 <div class="image-container">
-                    <span class="no-img-text">[ 補給物資照片 ]</span>
-                    <img src="${item.image}" alt="${item.name}" class="ingredient-img" 
+                    <span class="no-img-text">[ 補給物資 ]</span>
+                    <img class="ingredient-img" src="${item.image}" alt="${item.name}" 
                          onload="this.previousElementSibling.style.display='none';" 
                          onerror="this.style.display='none';">
                 </div>
-                <div class="card-content">
-                    <div class="ingredient-name">
-                        ${item.name}
-                        <span class="rarity-tag ${item.rarity}">${item.rarityText}</span>
-                    </div>
-                    <p class="description">${item.description}</p>
-                    <div class="source-box">
-                        <div class="source-title">📍 獲取來源</div>
-                        <div class="source-text">${item.source}</div>
-                    </div>
-                </div>
-            </div>
-        `).join('');
-
-        grid.innerHTML = htmlContent;
+                <div class="ingredient-name">${item.name}</div>
+            `;
+            grid.appendChild(card);
+        });
+    }
+    
+    function filterIngredients() {
+        const keyword = document.getElementById('searchInput').value.toLowerCase().trim();
+        
+        if (!keyword) {
+            displayIngredients(INGREDIENTS_DATA);
+            return;
+        }
+    
+        const filtered = INGREDIENTS_DATA.filter(item => {
+            return item.name.toLowerCase().includes(keyword) || 
+                   item.source.toLowerCase().includes(keyword) || 
+                   item.description.toLowerCase().includes(keyword) ||
+                   (item.rarityText && item.rarityText.toLowerCase().includes(keyword));
+        });
+    
+        displayIngredients(filtered);
+    }
+    
+    if (typeof INGREDIENTS_DATA !== 'undefined' && INGREDIENTS_DATA.length > 0) {
+        displayIngredients(INGREDIENTS_DATA);
+    } else {
+        document.getElementById('ingredientsGrid').innerHTML = "<p style='text-align:center; color:#ff4d4d;'>找不到食材數據，請檢查 ingredients-data.js 檔案！</p>";
+    }
+    
+    const modal = document.getElementById('ingredientModal');
+    
+    function openModal(index) {
+        const item = INGREDIENTS_DATA[index];
+        document.getElementById('modalName').innerText = item.name;
+        document.getElementById('modalDesc').innerText = item.description;
+        document.getElementById('modalSource').innerText = item.source;
+        
+        const raritySpan = document.getElementById('modalRarity');
+        raritySpan.innerText = item.rarityText;
+        raritySpan.className = `rarity-tag ${item.rarity}`;
+        
+        modal.style.display = 'flex';
+    }
+    
+    function closeModal() {
+        modal.style.display = 'none';
+    }
+    
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            closeModal();
+        }
     }
 
     function toggleSidebar(open) {
@@ -277,6 +470,5 @@
         }
     }
 </script>
-
 </body>
 </html>
