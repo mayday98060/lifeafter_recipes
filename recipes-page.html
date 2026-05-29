@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>明日之後食譜大全</title>
+    <title>末日存指南-食譜大全</title>
     <style>
         :root {
             --bg-color: #1a1a1a;
@@ -165,7 +165,6 @@
             opacity: 0.8;
         }
 
-        /* 💡 頂部導覽按鈕區域 */
         .top-nav-bar {
             position: absolute;
             top: 20px;
@@ -190,7 +189,6 @@
             color: #fff;
         }
         
-        /* 💡 側邊欄滑出式選單 */
         .sidebar {
             position: fixed;
             top: 0; 
@@ -236,9 +234,9 @@
 <div class="sidebar" id="mySidebar">
     <span class="close-sidebar" onclick="toggleSidebar(false)">&times;</span>
     <a href="index.html">🏠 返回主頁</a>
-    <a href="recipes-page.html" style="background-color: var(--accent-color); color: #1a1a1a;">🍳 食譜攻略圖鑑</a>
+    <a href="recipes-page.html" style="background-color: var(--accent-color); color: #1a1a1a;">🍳 食譜圖鑑</a>
     <a href="#" onclick="alert('裝備圖鑑正在籌備中！')">⚔️ 裝備圖鑑</a>
-    <a href="#" onclick="alert('資源圖鑑正在籌備中！')">🗺️ 資源圖鑑</a>
+    <a href="Ingredients.html">🗺️ 食材圖鑑</a>
     <a href="#" onclick="alert('生物圖鑑正在籌備中！')">🧟 生物圖鑑</a>
     <a href="stats.html">📊 使用者統計</a>
 </div>
@@ -247,10 +245,17 @@
     <div class="menu-btn" onclick="toggleSidebar(true)">☰ 選單</div>
 </div>
 
-<h1>明日之後食譜大全</h1>
+<h1>末日生存指南-食譜大全</h1>
 
 <div class="search-container">
-    <input type="text" id="searchInput" placeholder="輸入料理名稱、食材或效果（如：草莓、暴擊）..." oninput="filterRecipes()">
+    <input type="text" id="searchInput" placeholder="輸入料理名稱、食材或效果（如：射速、暴擊）..." oninput="filterRecipes()">
+</div>
+
+<div class="footer-content">
+    <p>🕒 最後更新時間：2026 年 5 月 29 日</p>
+    <p>📬 聯絡資訊 / 報錯回報：
+        <a href="https://discord.gg/eF3XWnXP" target="_blank">Discord 交流群</a>
+    </p>
 </div>
 
 <div class="recipe-grid" id="recipeGrid"></div>
@@ -275,13 +280,6 @@
             <p id="modalEffect"></p>
         </div>
     </div>
-</div>
-
-<div class="footer-content">
-    <p>🕒 最後更新時間：2026 年 5 月 26 日</p>
-    <p>📬 聯絡資訊 / 報錯回報：
-        <a href="https://discord.gg/eF3XWnXP" target="_blank">Discord 交流群</a>
-    </p>
 </div>
 
 <script src="recipes.js"></script>
