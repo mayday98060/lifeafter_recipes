@@ -5,23 +5,23 @@ const INGREDIENTS_DATA = [
         rarityText: "普通",
         image: "ingredients/草魚.png",
         description: "習性:草食性淡水魚\n一種比較常見的草食魚類，生殖能力和繁殖能力都超強。",
-        source: "營地魚塘、晴空麥田、亞述丘陵、多貝雪山、密斯卡鎮、大河區、狩狼野"
+        source: "野外淡水流域\n營地魚塘、晴空麥田、亞述丘陵、多貝雪山、密斯卡鎮、大河區、狩狼野"
     },
     {
-        name: "小麥",
-        rarity: "rare-green",
-        rarityText: "優秀",
-        image: "images/ingredients/wheat.jpg",
-        description: "經由精細耕作收穫的農作物。可以在私人莊園的農田裡加工製成「麵粉」，是烘焙麵包、義大利麵等主食類料理不可或缺的原料。",
-        source: "在營地金庫或快樂101的營地商人處購買小麥種子，並在私人莊園的田地中種植收穫。"
+        name: "明蝦",
+        rarity: "rare-white",
+        rarityText: "普通",
+        image: "ingredients/明蝦.png",
+        description: "一種很常見的蝦類，可以用來烹飪，也可以做成魚餌來釣龍蝦。",
+        source: "野外淡水流域\n營地魚塘、晴空麥田、亞述丘陵、多貝雪山、大河區、雙路市、沼澤邊境"
     },
     {
-        name: "草莓",
-        rarity: "rare-green",
-        rarityText: "優秀",
-        image: "images/ingredients/strawberry.jpg",
-        description: "酸甜可口的水果。在野外極其珍貴，用作食材時能大幅提升料理的美味度，常用於製作水果拼盤、草莓果醬或精緻甜點。",
-        source: "主要分布在「沙石堡」地圖的水源綠洲附近，玩家可前往綠洲進行野外採集。"
+        name: "河蟹",
+        rarity: "rare-white",
+        rarityText: "普通",
+        image: "ingredients/河蟹.png",
+        description: "生命力極強的一種螃蟹，常見於河底，可用於烹飪。",
+        source: "野外淡水流域\n營地魚塘、夏爾鎮、銀翼基地、鬼影山、荒土曠野、殘垣戈壁、烏茨礦場"
     },
     {
         name: "蜂蜜",
