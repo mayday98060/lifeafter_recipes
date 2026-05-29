@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>末世生存指南 - 食材物資圖鑑</title>
+    <title>末世生存指南 - 食材圖鑑</title>
     <style>
         :root {
             --bg-color: #1a1a1a;
@@ -148,7 +148,6 @@
             color: #bbb;
         }
 
-        /* 💡 側邊欄與選單 */
         .top-nav-bar {
             position: absolute;
             top: 20px;
@@ -218,11 +217,10 @@
 <div class="sidebar" id="mySidebar">
     <span class="close-sidebar" onclick="toggleSidebar(false)">&times;</span>
     <a href="index.html">🏠 主頁</a>
-    <a href="recipes-page.html">🍳 食譜攻略圖鑑</a>
+    <a href="recipes-page.html">🍳 食譜圖鑑</a>
     <a href="#" onclick="alert('武器圖鑑正在籌備中！')">⚔️ 裝備圖鑑</a>
-    <a href="Ingredients.html" style="background-color: var(--accent-color); color: #1a1a1a;">🪵 食材物資圖鑑</a>
+    <a href="Ingredients.html" style="background-color: var(--accent-color); color: #1a1a1a;">🗺️ 食材圖鑑</a>
     <a href="#" onclick="alert('生物圖鑑正在籌備中！')">🧟 生物圖鑑</a>
-    <a href="gacha.html">🎁 物資盲盒抽獎</a>
     <a href="stats.html">📊 使用者統計</a>
 </div>
 
@@ -231,13 +229,13 @@
 </div>
 
 <div class="ingredients-container">
-    <h2>🪵 基礎食材物資圖鑑</h2>
-    <div class="subtitle">末日烹飪的基石，了解食材來源是每位倖存者必修課。</div>
+    <h2>🪵 末世生存指南-食材圖鑑</h2>
+    <div class="subtitle">末日烹飪的基石，了解食材來源是每位倖存者的必修課。</div>
 
     <div class="ingredients-grid" id="ingredientsGrid"></div>
 </div>
 
-<script src="js/ingredients-data.js"></script>
+<script src="ingredients-data.js"></script>
 
 <script>
     renderIngredients();
@@ -249,7 +247,9 @@
             <div class="ingredient-card">
                 <div class="image-container">
                     <span class="no-img-text">[ 補給物資照片 ]</span>
-                    <img src="${item.image}" alt="${item.name}" class="ingredient-img" onerror="this.style.display='none'">
+                    <img src="${item.image}" alt="${item.name}" class="ingredient-img" 
+                         onload="this.previousElementSibling.style.display='none';" 
+                         onerror="this.style.display='none';">
                 </div>
                 <div class="card-content">
                     <div class="ingredient-name">
