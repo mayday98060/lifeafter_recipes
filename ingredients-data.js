@@ -1,13 +1,11 @@
-// js/ingredients-data.js
-
 const INGREDIENTS_DATA = [
     {
-        name: "肋條肉",
+        name: "草魚",
         rarity: "rare-white",
         rarityText: "普通",
-        image: "images/ingredients/meat.jpg",
-        description: "從野生動物身上採集到的新鮮肉類。富含高蛋白質，是製作烤肉、肉丸子及各類高級肉類料理的核心基礎食材。",
-        source: "野外地圖（如秋日森林、沙石堡）擊殺鹿、狼、感染巨熊等野生動物後採集獲得。"
+        image: "ingredients/草魚.png",
+        description: "習性:草食性淡水魚\n一種比較常見的草食魚類，生殖能力和繁殖能力都超強。",
+        source: "營地魚塘、晴空麥田、亞述丘陵、多貝雪山、密斯卡鎮、大河區、狩狼野"
     },
     {
         name: "小麥",
