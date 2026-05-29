@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>末世生存指南 - 食材圖鑑</title>
+    <title>末世生存指南 - 食材物資圖鑑</title>
     <style>
         :root {
             --bg-color: #1a1a1a;
@@ -69,31 +69,32 @@
             box-shadow: 0 8px 25px rgba(243, 156, 18, 0.2);
         }
 
-        .image-placeholder {
+        .image-container {
             width: 100%;
             height: 160px;
             background-color: #1a1a1a;
+            position: relative;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
             border-bottom: 1px solid var(--section-border);
-            position: relative;
-            overflow: hidden;
         }
 
-        .image-placeholder img {
+        .no-img-text {
+            color: #555;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .ingredient-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
         }
 
-        .img-icon {
-            font-size: 3rem;
-            margin-bottom: 5px;
-        }
-
-        /* 內容區塊 */
         .card-content {
             padding: 20px;
             display: flex;
@@ -147,7 +148,7 @@
             color: #bbb;
         }
 
-        /* 💡 頂部導覽列與側邊欄 */
+        /* 💡 側邊欄與選單 */
         .top-nav-bar {
             position: absolute;
             top: 20px;
@@ -231,122 +232,42 @@
 
 <div class="ingredients-container">
     <h2>🪵 基礎食材物資圖鑑</h2>
-    <div class="subtitle">末日烹飪的基石，了解食材來源是每位倖存者的必修課。</div>
+    <div class="subtitle">末日烹飪的基石，了解食材來源是每位倖存者必修課。</div>
 
-    <div class="ingredients-grid">
-        
-        <div class="ingredient-card">
-            <div class="image-placeholder">
-                <span class="img-icon">🥩</span>
-                <span style="font-size:0.8rem; color:#555;">[ 肋條肉 圖片 ]</span>
-            </div>
-            <div class="card-content">
-                <div class="ingredient-name">
-                    肋條肉
-                    <span class="rarity-tag rare-white">普通</span>
-                </div>
-                <p class="description">從野生動物身上採集到的新鮮肉類。富含高蛋白質，是製作烤肉、肉丸子及各類高級肉類料理的核心基礎食材。</p>
-                <div class="source-box">
-                    <div class="source-title">📍 獲取來源</div>
-                    <div class="source-text">野外地圖（如秋日森林、沙石堡）擊殺鹿、狼、感染巨熊等野生動物後採集獲得。</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="ingredient-card">
-            <div class="image-placeholder">
-                <span class="img-icon">🌾</span>
-                <span style="font-size:0.8rem; color:#555;">[ 小麥 圖片 ]</span>
-            </div>
-            <div class="card-content">
-                <div class="ingredient-name">
-                    小麥
-                    <span class="rarity-tag rare-green">優秀</span>
-                </div>
-                <p class="description">經由精細耕作收穫的農作物。可以在私人莊園的農田裡加工製成「麵粉」，是烘焙麵包、義大利麵等主食類料理不可或缺的原料。</p>
-                <div class="source-box">
-                    <div class="source-title">📍 獲取來源</div>
-                    <div class="source-text">在營地金庫或快樂101的營地商人處購買小麥種子，並在私人莊園的田地中種植收穫。</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="ingredient-card">
-            <div class="image-placeholder">
-                <span class="img-icon">🍓</span>
-                <span style="font-size:0.8rem; color:#555;">[ 草莓 圖片 ]</span>
-            </div>
-            <div class="card-content">
-                <div class="ingredient-name">
-                    草莓
-                    <span class="rarity-tag rare-green">優秀</span>
-                </div>
-                <p class="description">酸甜可口的水果。在野外極其珍貴，用作食材時能大幅提升料理的美味度，常用於製作水果拼盤、草莓果醬或精緻甜點。</p>
-                <div class="source-box">
-                    <div class="source-title">📍 獲取來源</div>
-                    <div class="source-text">主要分布在「沙石堡」地圖的水源綠洲附近，玩家可前往綠洲進行野外採集。</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="ingredient-card">
-            <div class="image-placeholder">
-                <span class="img-icon">🍯</span>
-                <span style="font-size:0.8rem; color:#555;">[ 蜂蜜 圖片 ]</span>
-            </div>
-            <div class="card-content">
-                <div class="ingredient-name">
-                    蜂蜜
-                    <span class="rarity-tag rare-blue">珍稀</span>
-                </div>
-                <p class="description">純天然的高能量甜味劑。單獨食用即可恢復大量飢餓度，加入料理中（如蜜汁烤肉、蜂蜜水）更能賦予食物強大的生命回復屬性。</p>
-                <div class="source-box">
-                    <div class="source-title">📍 獲取來源</div>
-                    <div class="source-text">在「秋日森林」野外砍伐帶有蜂巢的大樹，蜂巢掉落後採集取得。注意採集時可能會遭到蜜蜂攻擊。</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="ingredient-card">
-            <div class="image-placeholder">
-                <span class="img-icon">🧊</span>
-                <span style="font-size:0.8rem; color:#555;">[ 冰塊 圖片 ]</span>
-            </div>
-            <div class="card-content">
-                <div class="ingredient-name">
-                    冰塊
-                    <span class="rarity-tag rare-white">普通</span>
-                </div>
-                <p class="description">晶瑩剔透的冰塊。主要作為廚房料理的調味輔料，用來降低食物溫度或保持鮮度，是調配熱水、果汁和各式消暑冷飲的必備材料。</p>
-                <div class="source-box">
-                    <div class="source-title">📍 獲取來源</div>
-                    <div class="source-text">在寒冷的「多貝雪山」地圖採集野外冰塊，或者直接前往營地/快樂101的市政廳找市政商人購買。</div>
-                </div>
-            </div>
-        </div>
-
-        <div class="ingredient-card">
-            <div class="image-placeholder">
-                <span class="img-icon">🐟</span>
-                <span style="font-size:0.8rem; color:#555;">[ 鯉魚 圖片 ]</span>
-            </div>
-            <div class="card-content">
-                <div class="ingredient-name">
-                    鯉魚
-                    <span class="rarity-tag rare-green">優秀</span>
-                </div>
-                <p class="description">常見的淡水魚類。肉質細嫩，是魚類料理的基礎食材。烘烤或清蒸後的鯉魚料理可以為倖存者提供穩定的全面屬性加成。</p>
-                <div class="source-box">
-                    <div class="source-title">📍 獲取來源</div>
-                    <div class="source-text">在任何淡水水域（如秋日森林的河流中），使用釣魚竿配合適當的魚餌進行釣魚獲得。</div>
-                </div>
-            </div>
-        </div>
-
-    </div>
+    <div class="ingredients-grid" id="ingredientsGrid"></div>
 </div>
 
+<script src="js/ingredients-data.js"></script>
+
 <script>
+    renderIngredients();
+
+    function renderIngredients() {
+        const grid = document.getElementById('ingredientsGrid');
+        
+        const htmlContent = INGREDIENTS_DATA.map(item => `
+            <div class="ingredient-card">
+                <div class="image-container">
+                    <span class="no-img-text">[ 補給物資照片 ]</span>
+                    <img src="${item.image}" alt="${item.name}" class="ingredient-img" onerror="this.style.display='none'">
+                </div>
+                <div class="card-content">
+                    <div class="ingredient-name">
+                        ${item.name}
+                        <span class="rarity-tag ${item.rarity}">${item.rarityText}</span>
+                    </div>
+                    <p class="description">${item.description}</p>
+                    <div class="source-box">
+                        <div class="source-title">📍 獲取來源</div>
+                        <div class="source-text">${item.source}</div>
+                    </div>
+                </div>
+            </div>
+        `).join('');
+
+        grid.innerHTML = htmlContent;
+    }
+
     function toggleSidebar(open) {
         const sidebar = document.getElementById('mySidebar');
         if (open) {
