@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>末世生存指南 - 食材圖鑑</title>
+    <style>
+        :root {
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --text-color: #ffffff;
+            --accent-color: #f39c12;
+            --section-border: #444;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 40px 20px;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ingredients-container {
+            width: 100%;
+            max-width: 900px;
+            margin-top: 60px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            text-align: center;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            font-size: 2rem;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 30px;
+            font-size: 1rem;
+        }
+
+        .ingredients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .ingredient-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--section-border);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .ingredient-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 8px 25px rgba(243, 156, 18, 0.2);
+        }
+
+        .image-placeholder {
+            width: 100%;
+            height: 160px;
+            background-color: #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 1px solid var(--section-border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .image-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .img-icon {
+            font-size: 3rem;
+            margin-bottom: 5px;
+        }
+
+        /* 內容區塊 */
+        .card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .ingredient-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin: 0 0 10px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .rarity-tag {
+            font-size: 0.75rem;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-weight: normal;
+        }
+        .rare-white { background: #555; color: #fff; }
+        .rare-green { background: #2ecc71; color: #1a1a1a; }
+        .rare-blue { background: #3498db; color: #fff; }
+
+        .description {
+            font-size: 0.95rem;
+            color: #ddd;
+            line-height: 1.5;
+            margin: 0 0 15px 0;
+            flex-grow: 1;
+        }
+
+        .source-box {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-left: 3px solid #5dade2;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        .source-title {
+            font-weight: bold;
+            color: #5dade2;
+            margin-bottom: 3px;
+        }
+
+        .source-text {
+            color: #bbb;
+        }
+
+        /* 💡 頂部導覽列與側邊欄 */
+        .top-nav-bar {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 99;
+        }
+        
+        .menu-btn {
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            color: var(--text-color);
+            background-color: var(--card-bg);
+            border: 1px solid var(--accent-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .menu-btn:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0; 
+            left: -250px; 
+            width: 250px; 
+            height: 100%;
+            background-color: var(--card-bg);
+            z-index: 2000; 
+            transition: 0.3s ease;
+            box-shadow: 5px 0 15px rgba(0,0,0,0.5);
+            padding-top: 60px;
+            box-sizing: border-box;
+            border-right: 1px solid var(--section-border);
+        }
+        
+        .sidebar a {
+            display: block;
+            padding: 15px 25px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--section-border);
+            transition: all 0.2s;
+        }
+        
+        .sidebar a:hover {
+            background-color: var(--accent-color);
+            color: #fff;
+        }
+        
+        .close-sidebar {
+            position: absolute;
+            top: 15px; 
+            right: 20px;
+            font-size: 28px;
+            cursor: pointer;
+            color: var(--text-color);
+        }
+    </style>
+</head>
+<body>
+
+<div class="sidebar" id="mySidebar">
+    <span class="close-sidebar" onclick="toggleSidebar(false)">&times;</span>
+    <a href="index.html">🏠 主頁</a>
+    <a href="recipes-page.html">🍳 食譜攻略圖鑑</a>
+    <a href="#" onclick="alert('武器圖鑑正在籌備中！')">⚔️ 裝備圖鑑</a>
+    <a href="Ingredients.html" style="background-color: var(--accent-color); color: #1a1a1a;">🪵 食材物資圖鑑</a>
+    <a href="#" onclick="alert('生物圖鑑正在籌備中！')">🧟 生物圖鑑</a>
+    <a href="gacha.html">🎁 物資盲盒抽獎</a>
+    <a href="stats.html">📊 使用者統計</a>
+</div>
+
+<div class="top-nav-bar">
+    <div class="menu-btn" onclick="toggleSidebar(true)">☰ 選單</div>
+</div>
+
+<div class="ingredients-container">
+    <h2>🪵 基礎食材物資圖鑑</h2>
+    <div class="subtitle">末日烹飪的基石，了解食材來源是每位倖存者的必修課。</div>
+
+    <div class="ingredients-grid">
+        
+        <div class="ingredient-card">
+            <div class="image-placeholder">
+                <span class="img-icon">🥩</span>
+                <span style="font-size:0.8rem; color:#555;">[ 肋條肉 圖片 ]</span>
+            </div>
+            <div class="card-content">
+                <div class="ingredient-name">
+                    肋條肉
+                    <span class="rarity-tag rare-white">普通</span>
+                </div>
+                <p class="description">從野生動物身上採集到的新鮮肉類。富含高蛋白質，是製作烤肉、肉丸子及各類高級肉類料理的核心基礎食材。</p>
+                <div class="source-box">
+                    <div class="source-title">📍 獲取來源</div>
+                    <div class="source-text">野外地圖（如秋日森林、沙石堡）擊殺鹿、狼、感染巨熊等野生動物後採集獲得。</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ingredient-card">
+            <div class="image-placeholder">
+                <span class="img-icon">🌾</span>
+                <span style="font-size:0.8rem; color:#555;">[ 小麥 圖片 ]</span>
+            </div>
+            <div class="card-content">
+                <div class="ingredient-name">
+                    小麥
+                    <span class="rarity-tag rare-green">優秀</span>
+                </div>
+                <p class="description">經由精細耕作收穫的農作物。可以在私人莊園的農田裡加工製成「麵粉」，是烘焙麵包、義大利麵等主食類料理不可或缺的原料。</p>
+                <div class="source-box">
+                    <div class="source-title">📍 獲取來源</div>
+                    <div class="source-text">在營地金庫或快樂101的營地商人處購買小麥種子，並在私人莊園的田地中種植收穫。</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ingredient-card">
+            <div class="image-placeholder">
+                <span class="img-icon">🍓</span>
+                <span style="font-size:0.8rem; color:#555;">[ 草莓 圖片 ]</span>
+            </div>
+            <div class="card-content">
+                <div class="ingredient-name">
+                    草莓
+                    <span class="rarity-tag rare-green">優秀</span>
+                </div>
+                <p class="description">酸甜可口的水果。在野外極其珍貴，用作食材時能大幅提升料理的美味度，常用於製作水果拼盤、草莓果醬或精緻甜點。</p>
+                <div class="source-box">
+                    <div class="source-title">📍 獲取來源</div>
+                    <div class="source-text">主要分布在「沙石堡」地圖的水源綠洲附近，玩家可前往綠洲進行野外採集。</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ingredient-card">
+            <div class="image-placeholder">
+                <span class="img-icon">🍯</span>
+                <span style="font-size:0.8rem; color:#555;">[ 蜂蜜 圖片 ]</span>
+            </div>
+            <div class="card-content">
+                <div class="ingredient-name">
+                    蜂蜜
+                    <span class="rarity-tag rare-blue">珍稀</span>
+                </div>
+                <p class="description">純天然的高能量甜味劑。單獨食用即可恢復大量飢餓度，加入料理中（如蜜汁烤肉、蜂蜜水）更能賦予食物強大的生命回復屬性。</p>
+                <div class="source-box">
+                    <div class="source-title">📍 獲取來源</div>
+                    <div class="source-text">在「秋日森林」野外砍伐帶有蜂巢的大樹，蜂巢掉落後採集取得。注意採集時可能會遭到蜜蜂攻擊。</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ingredient-card">
+            <div class="image-placeholder">
+                <span class="img-icon">🧊</span>
+                <span style="font-size:0.8rem; color:#555;">[ 冰塊 圖片 ]</span>
+            </div>
+            <div class="card-content">
+                <div class="ingredient-name">
+                    冰塊
+                    <span class="rarity-tag rare-white">普通</span>
+                </div>
+                <p class="description">晶瑩剔透的冰塊。主要作為廚房料理的調味輔料，用來降低食物溫度或保持鮮度，是調配熱水、果汁和各式消暑冷飲的必備材料。</p>
+                <div class="source-box">
+                    <div class="source-title">📍 獲取來源</div>
+                    <div class="source-text">在寒冷的「多貝雪山」地圖採集野外冰塊，或者直接前往營地/快樂101的市政廳找市政商人購買。</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ingredient-card">
+            <div class="image-placeholder">
+                <span class="img-icon">🐟</span>
+                <span style="font-size:0.8rem; color:#555;">[ 鯉魚 圖片 ]</span>
+            </div>
+            <div class="card-content">
+                <div class="ingredient-name">
+                    鯉魚
+                    <span class="rarity-tag rare-green">優秀</span>
+                </div>
+                <p class="description">常見的淡水魚類。肉質細嫩，是魚類料理的基礎食材。烘烤或清蒸後的鯉魚料理可以為倖存者提供穩定的全面屬性加成。</p>
+                <div class="source-box">
+                    <div class="source-title">📍 獲取來源</div>
+                    <div class="source-text">在任何淡水水域（如秋日森林的河流中），使用釣魚竿配合適當的魚餌進行釣魚獲得。</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function toggleSidebar(open) {
+        const sidebar = document.getElementById('mySidebar');
+        if (open) {
+            sidebar.style.left = '0px'; 
+        } else {
+            sidebar.style.left = '-250px'; 
+        }
+    }
+</script>
+
+</body>
+</html>
